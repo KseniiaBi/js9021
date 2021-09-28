@@ -16,7 +16,7 @@
 	// https://developer.mozilla.org/ru/
 	// web.dev
 	// https://karmazzin.gitbook.io/eloquentjavascript_ru/
-	
+	// http://code.mu/ru/javascript/book/prime/
 
 	// variables and data types
  	
@@ -63,7 +63,7 @@
 
 
  	let k = 6;
- 	let l = 8;
+ 	let l = 6;
 
  	// if-else
 
@@ -76,6 +76,7 @@
  	else{
  		console.log('l > k');
  	}
+
 
  	// switch
 
@@ -162,6 +163,39 @@
 	}
 
 
+// тернарный оператор
+
+	let p = 9;
+	let q = 7;
+
+	let o = p > q ? p : q; // условие ? true : false
+
+ 	let w = k > l ? k : (k< l) ? l : null; 
+
+ 	// camelCase => isLoggedIn
+
+
+ 	// HW: написать "Программу", которая спрашивает пользователя его имя, возраст, есть ли питомец и имя питомца и обрабатывает каким-то образом данную информацию (придумайте сообщение в консоли)
+
+
+ 	let min = +prompt('Type a minute');
+
+
+ 	if(min <= 15){
+ 		console.log('First quarter');
+ 	}
+ 	else if(min >15 && min <= 30){
+ 		console.log('Second quarter');
+ 	}
+ 	else if(min >30 && min <= 45){
+ 		console.log('Third quarter');
+ 	}
+ 	else if(min >45 && min <= 60){
+		console.log('Fourth quarter');
+ 	}
+ 	else{
+ 		console.log('🥚');
+ 	}
 
 
 
