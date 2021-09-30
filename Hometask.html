@@ -8,7 +8,12 @@
 </head>
 <body>
     <script>
-     let a = 7;
+     let userName = prompt('Type your name');
+     let userAge = +prompt('Type your age');
+     let userHasPet = confirm('Do you have a pet?');
+     let userPetName = userHasPet && prompt('Type your pate name')
+     console.log(`Your name is ${userName}, Your age is ${userAge}, You have a pet ${userHasPet ? "yes,": "no."} ${userHasPet ? `Your pet's name is ${userPetName}`:''}`);
+
 
     </script>
 </body>
