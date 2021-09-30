@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function booleanCheck(test) {
+        if (typeof test === "boolean" && test === true) {
+          return console.log("Верно");
+        }
+        if (typeof test === "boolean" && test === false) {
+          return console.log("Неверно");
+        }
+        return console.log("Введите True или False");
+      }
+
+      function longBooleanCheck(test) {
+        if (typeof test === "boolean" && test) {
+          console.log("Верно");
+        } else if (typeof test === "boolean" && !test) {
+          console.log("Неверно");
+        } else {
+          console.log("Введи True или False");
+        }
+      }
+    </script>
+  </body>
+</html>
