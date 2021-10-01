@@ -10,12 +10,14 @@
     <script>
       function booleanCheck(test) {
         if (typeof test === "boolean" && test === true) {
-          return console.log("Верно");
+          console.log("Верно");
+          return;
         }
         if (typeof test === "boolean" && test === false) {
-          return console.log("Неверно");
+          console.log("Неверно");
+          return;
         }
-        return console.log("Введите True или False");
+        console.log("Введите True или False");
       }
 
       function longBooleanCheck(test) {

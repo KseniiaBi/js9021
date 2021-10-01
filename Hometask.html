@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-     let userName = prompt('Type your name');
-     let userAge = +prompt('Type your age');
-     let userHasPet = confirm('Do you have a pet?');
-     let userPetName = userHasPet && prompt('Type your pate name')
-     console.log(`Your name is ${userName}, Your age is ${userAge}, You have a pet ${userHasPet ? "yes,": "no."} ${userHasPet ? `Your pet's name is ${userPetName}`:''}`);
-
-
+      let userName = prompt("Type your name");
+      let userAge = +prompt("Type your age");
+      let userHasPet = confirm("Do you have a pet?");
+      let userPetName = userHasPet && prompt("Type your pate name");
+      console.log(
+        `Your name is ${userName}, Your age is ${userAge}, You have a pet ${
+          userHasPet ? "yes," : "no."
+        } ${userHasPet ? `Your pet's name is ${userPetName}` : ""}`
+      );
     </script>
-</body>
+  </body>
 </html>
