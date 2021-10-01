@@ -7,8 +7,168 @@
 </head>
 <body>
 
+<<<<<<< HEAD
 	
 <script src="Script.js">
+=======
+
+
+<script>
+
+	// https://learn.javascript.ru/
+	// w3schools.com
+	// https://developer.mozilla.org/ru/
+	// web.dev
+	// https://karmazzin.gitbook.io/eloquentjavascript_ru/
+	
+
+	// variables and data types
+ 	
+ 	// let, const, var
+
+
+ 	// на данный момент существует 7(8) типов данных
+ 	let a; // undefined
+ 	let b, c, d;
+ 	let e = true; // boolean true || false
+
+ 	b = undefined;
+ 	b = 8; // number <2^54 incl. ±Infinity, ±0, NaN
+ 	c = 'Hello'; // string
+ 	d = '475438545905854505984355654689n'; // bigInt
+ 	f = null;
+ 	let sym = Symbol('name'); // symbol
+
+ 	// ???? 8-th - Object
+
+ 	let obj = {
+ 		name: 'Jane',
+ 		age: 22,
+ 		city: 'LA',
+ 		hobbys: ['Art', 'Football', 'Cooking', 'JS']
+ 	};
+
+ 	// operators
+
+ 	// + - * / % (остаток от деления) == === ++ -- ! != !=== > < >= <= || &&
+
+
+ 	const x = 10;
+
+	// JS standart functions
+
+	console.log(c);
+	console.warn('Warning');
+	console.error('Alarm!');
+
+	// alert('Hello User');
+	// confirm('Do you really want to quit?');
+
+
+
+ 	let k = 6;
+ 	let l = 8;
+
+ 	// if-else
+
+ 	if(k > l){
+ 		console.log('k > l');
+ 	}
+ 	else if(k === l){
+ 		console.log('k = l');
+ 	}
+ 	else{
+ 		console.log('l > k');
+ 	}
+
+ 	// switch
+
+
+	// let day = +prompt('Type number 1-7', 1);
+
+	// switch(day){
+	// 	case 1: console.log('Monday');
+	// 			break;
+	// 	case 2: console.log('Tuesday');
+	// 			break;
+	// 	case 3: console.log('Wed');
+	// 			break;
+	// 	case 4: console.log('Thu');
+	// 			break;
+	// 	case 5: console.log('Fri');
+	// 			break;
+	// 	case 6: console.log('Sat');
+	// 			break;
+	// 	case 7: console.log('Sun');
+	// 			break;
+	// 	default: console.log('Not a day');
+	// 			break;
+	// }
+
+	// "" '' ``
+
+	let username = 'Peter';
+	let msg = `Hello ${username} 🦄`;
+	console.log(msg);
+
+	// loops
+
+	for(let i = 0; i <= 5; i++){
+		console.log(`i: ${i}`);
+	}
+
+	let m = 10;
+	while(m > 7){
+		console.log(`m: ${m}`);
+		m--;
+	}
+
+	let n = 7;
+	do{
+		console.log(`n: ${n}`);
+		n++;
+	}
+	while(n<6);
+
+	a = 35;
+	b = 10;
+	
+	if(a < 20 && b > 5){
+		console.log('true');
+	}
+	else{
+		console.log('false');
+	}
+
+
+	if(a < 20 || b > 5){
+		console.log('true2');
+	}
+	else{
+		console.log('false2');
+	}
+
+
+	let isLoggedIn = false;
+
+	if(!isLoggedIn){ // isLoggedIn !== true || isLoggedIn === false
+		// предложить форму логина
+		console.log('please, log in');
+		isLoggedIn = !isLoggedIn;
+	}
+
+
+	c = 12;
+
+	while(c < 25){
+		c += 3; // c = c + 3 => += -= *= /=
+		console.warn(`c=${c}`);
+	}
+
+
+
+
+>>>>>>> parent of bce4eca (index file edited)
 
 </script>
 </body>
