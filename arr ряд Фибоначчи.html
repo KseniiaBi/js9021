@@ -1,0 +1,29 @@
+<DOCTYPE! html>
+<html>
+	<head>
+		<title> "Fibonacci" </title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	</head>
+	<body>
+		<script>
+
+			 // HW: 3) посчитать 11е число Фибоначчи при условии, что ряд начинаем с 1 
+			 
+	let arr = new Array (11);
+	arr[0]=1;
+	arr[1]=2;
+
+for (let i = 2; i < arr.length; i++) {
+
+		arr[i]= arr[i-1]+arr[i-2]
+
+	 }
+  alert(arr);
+
+	
+		</script>	
+
+	</body>
+</html>

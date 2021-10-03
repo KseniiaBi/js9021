@@ -1,0 +1,37 @@
+<DOCTYPE! html>
+<html>
+	<head>
+		<title> "bubbles" </title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	</head>
+	<body>
+		<script>
+
+			 // HW: 1)отсортировать массив пузырьком arr = [5,8,1,9,2,6,3,7,4] 
+			 
+			let arr = [5,8,1,9,2,6,3,7,4];
+	
+	for (let i = 0; i < arr.length; i++) {
+
+		for (let j = 0; j < arr.length; j++) {
+
+				while (arr[j] > arr[j+1]) {
+
+					let a = arr[j];
+					let b = arr[j+1];
+					arr[j] = b;
+					arr[j+1] = a;
+
+				}
+	
+		}
+  }
+    alert(arr);
+
+	
+		</script>	
+
+	</body>
+</html>

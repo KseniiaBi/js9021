@@ -1,0 +1,49 @@
+<DOCTYPE! html>
+<html>
+	<head>
+		<title> "wiseman" </title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	</head>
+	<body>
+		<script>
+
+			 // HW: 2)решить задачу про мудреца и шахматы - посчитать сумму в долларах, на которую "прилип" шейх, для этого учитываем вес 1 зерна - 1 арруза (0.019г) и цена за кг риса 1$ 
+			 
+	let arr = new Array (64);
+	arr[0]=1;
+	arr[1]=2;
+	let sum=0;
+
+for (let i = 2; i < arr.length; i++) {
+
+		arr[i]= arr[i-1]*2
+
+	 }
+
+  alert(`Раскладываем зёрна ${arr}`);
+
+  for (let i = 2; i < arr.length; i++) {
+
+		sum += arr[i]
+
+	 }
+
+    alert(`Количество зёрен ${sum}`);
+
+    let weight_gramm = (0.019);
+
+    let weight_kg= weight_gramm/1000;
+
+    let price = 1;
+
+    let cost = weight_kg*price*sum
+
+    alert (`Всего в $ ${cost}`)
+
+	
+		</script>	
+
+	</body>
+</html>
