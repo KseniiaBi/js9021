@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<title>Rhombus</title>
+<body>
+</body>
+<script>
+for (let i=0;i=1;){
+    var size=+prompt(`Ввидите размер поля( 5 <= size <= 56)`,8);
+    if (size>=5 && size<=56){
+        i=1;
+        break;
+    }
+    else {
+        alert(`Не коректное значение`);
+    }
+}
+var srt1 = ``;
+var srt2 = ``;
+if (size%2 == 0){
+    let half=size/2;
+    for (let i=0;i<half;i++){
+        srt1=`` ;srt2=``;
+        for (let j=0;j<half;j++){
+            if (j<(half-i-1)) {
+                srt1+=` `;
+            }
+            else {
+                srt1+=`*`;
+            }
+        }
+        for (let j=half;j>0;j--){
+            if (j<(half-i)) {
+                srt2+=` `;
+            }
+            else {
+                srt2+=`*`;
+            }
+        }
+    console.log(srt1+srt2);    
+    }
+    for (let i=half;i>0;i--){
+        srt1=``;srt2=``;
+        for (let j=0;j<half;j++){
+            if (j<(half-i)) {
+                srt1+=` `;
+            }
+            else {
+                srt1+=`*`;
+            }
+            
+        }
+        for (let j=half;j>0;j--){
+            if (j<(half-i+1)) {
+                srt2+=` `;
+            }
+            else {
+                srt2+=`*`;
+            }
+            
+        }
+    console.log(srt1+srt2);    
+    }
+}
+else {
+    let half=size/2 + 0.5;
+    for (let i=0;i<half;i++){
+        srt1=`` ;srt2=``;
+        for (let j=0;j<half;j++){
+            if (j<(half-i-1)) {
+                srt1+=` `;
+            }
+            else {
+                srt1+=`*`;
+            }
+        }
+        for (let j=half;j>1;j--){
+            if (j<(half-i+1)) {
+                srt2+=` `;
+            }
+            else {
+                srt2+=`*`;
+            }
+        }
+    console.log(srt1+srt2);    
+    }
+    for (let i=half-1;i>0;i--){
+        srt1=``;srt2=``;
+        for (let j=0;j<half;j++){
+            if (j<(half-i)) {
+                srt1+=` `;
+            }
+            else {
+                srt1+=`*`;
+            }
+            
+        }
+        for (let j=half;j>1;j--){
+            if (j<(half-i+2)) {
+                srt2+=` `;
+            }
+            else {
+                srt2+=`*`;
+            }
+            
+        }
+    console.log(srt1+srt2);    
+    }
+}
+</script>
+</html>
+
