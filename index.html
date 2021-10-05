@@ -10,69 +10,267 @@
 
 
 <script>
+//
+	// Function Declaration
 
-// bubble sort
-	let arr = [5,8,1,9,2,6,3,7,4];
+	sayHello();
+	function sayHello(){
+		console.log('Hello!');
+	}
 
-	for(let i = 0; i < arr.length; i++){
-		for(let j = 0; j < arr.length-1; j++){
-			if(arr[j] > arr[j+1]){
-				let min = arr[j+1];
-				arr[j+1] = arr[j];
-				arr[j] = min;
-			}
-			
+
+
+	// Function Expression
+
+	let test = function(){
+		console.warn('Test');
+	}
+	test();
+
+	// anonymous + callback
+	// setTimeout(function(){
+	// 	for(let i = 0; i < 5; i++){
+	// 		console.log(i);
+	// 	}
+	// 	console.log(i);
+	// }, 1000); // 01234 + i is not defined
+
+	// setTimeout(function(){
+	// 	for(var i = 0; i < 5; i++){
+	// 		console.log(i);
+	// 	}
+	// 	console.log(i);
+	// }, 1000);
+
+
+	// callback
+
+	function deleteItem(proceed, decline){
+		let res = confirm('Delete item?');
+		// res ? proceed() : decline();
+		if(res == true){
+			proceed();
+		}
+		else{
+			decline();
 		}
 	}
 
-	console.log(arr);
-
-
-
-	//  chess
-
-	let arruza = 0.000019;
-	let price = 1; // usd
-
-
-	let rice_count = 1; // short version rc = 1+ Math.pow(2,63);
-	let rice_weight = 0;
-
-	for(let i = 0; i < 64; i++){
-		let additionalCount = Math.pow(2, i);
-		rice_weight += additionalCount * arruza;
+	function confirmDel(){
+		console.warn('Item was deleted');
+	}
+	function declineDel(){
+		console.warn('Item was not deleted');
 	}
 
-	console.log(rice_weight);
 
+	// deleteItem(confirmDel, declineDel);
 
-// 11е число Фибоначчи
+// parameters and returns
 
-	let fib = 11;
-
-	let a = 1;
-	let b = 1;
-	let c;
-
-	let fibNum;
-
-	for(let i = 2; i <= fib; i++){
-		c = a + b;
-		a = b;
-		b = c;
-		fibNum = c;
+	function sum(a,b,c,d){
+		if(typeof(a) == 'number' && typeof(b) == 'number'){
+			let result = a+b;
+			console.log(result);
+		}
 	}
 
-	console.log(fibNum);
+	sum(2,3,4);
 
-
-	let fibArr = [1,1];
-
-	for(let i = 2; i <= fib; i++){
-		fibArr[i] = fibArr[i-1] + fibArr[i-2];
+	function superSum(){
+		let result = 0;
+		for(let i = 0; i < arguments.length; i++){
+			result += arguments[i];
+		}
+		console.log(result);
 	}
-	console.log(fibArr);
 
+	superSum(4,5,6,7,8);
+	superSum(4,5);
+
+
+	function mul(a,b){
+		return a*b;
+	}
+
+	let x = mul(2,3);
+
+	console.log(mul(2,5));
+	console.log(sum(2,1));
+
+//  foo не является чистой функцией
+	let a = 5;
+	function foo(){
+		a = 10;
+	}
+	console.log(a);
+	foo();
+	console.log(a);
+
+// anonymous self-calling
+
+	(function(){
+		console.error('Anonymous');
+	})();
+
+
+// arrow function
+
+	let sayBye = () => console.log('Bye!');
+	sayBye();
+
+	let makeLoop = end => {
+		for(let i = 0; i <= end; i++){
+			console.warn(`i: ${i}`);
+		}
+	}
+	makeLoop(3);
+
+	let extract = (a,b) => a-b;
+	console.log(extract(5,3));
+
+
+	// recursive function
+
+// factorial -> 10! = 1*2*3...10
+
+	function factorial(f){
+		if(f > 1){
+			return f * factorial(f-1);
+		}
+		else{
+			return f;
+		}
+	}
+
+	console.log(factorial(5));
+
+
+	//  practice
+
+	//  есть ли среди аргументов число 3
+
+	function isThreePassed(){
+		let threePassed = false
+		for(let i = 0; i < arguments.length; i++){
+			if(arguments[i] === 3){
+				threePassed = true;
+			}
+		}
+		return threePassed;
+	}
+
+	console.log(isThreePassed(1,2,3,4,5));
+
+
+	// посчитать количество b внутри слова
+
+	function countBs(word){
+		if(!typeof(word) == 'string'){
+			return;
+		}
+		let bs = 0;
+		for(let i = 0; i < word.length; i++){
+			if(word[i] == 'b'){
+				bs++;
+			}
+		}
+		return bs;
+	}
+
+	console.log(countBs('bubble'));
+
+	// рекурсией вывести поочередно элементы массива
+
+	let arr = [1,2,3,4,5,6];
+
+	function printArr(a, index){
+		if(index < a.length){
+			console.log(a[index]);
+			index++;
+			printArr(a, index);
+		}
+	}
+	
+	printArr(arr, 0);
+
+
+	// arrow fn greting (msg, name)
+
+	let greet = (msg, name) => `${msg}, ${name}`;
+
+	console.log(greet('Ciao', 'Ricci'));
+	console.log(greet('Good evening', 'Richard'));
+
+
+	// fn expression sum a+b / c
+
+	let calc = function(a,b,c){
+		return (a+b)/c;
+	}
+
+	console.log(calc(5,7,2));
+
+
+	// diff values -> arr of positive numbers
+
+	let index = 0;
+	let arrr = [];
+
+	function retPositives(){
+		for(let i = 0; i < arguments.length; i++){
+			if(typeof(arguments[i]) == 'number' && arguments[i] > 0){
+				arrr[index] = arguments[i];
+				index++;
+			}
+			else if(typeof(arguments[i]) == 'object' && arguments[i].length > 0){
+				retPositives(...arguments[i]);
+			}
+		}
+	}
+
+	retPositives(3,false, -22, 'fsdfds', [1,2,3], true, -32, 90, -2, ['qq'], {a: 1});
+	console.log(arrr);
+
+
+	//  [1,2,[3,4,[5,6,[7]]], [8,[9,10]], [11,12,[13, 14, [15]]]] - count sum
+
+	function countArrSum(ar){
+		let sum = 0;
+		for(let i = 0; i < ar.length; i++){
+			if(typeof(ar[i]) == 'number'){
+				sum += ar[i];
+			}
+			else{
+				sum += countArrSum(ar[i]); // прибавляем результат выполнения рекурсивного вызова для вложенного массива
+			}
+		}
+		return sum; // нужно для того, чтобы вернуть результат из каждого вложенного вызова  функции наверх в родительский вызов и из него за пределы функции
+	}
+
+	console.log(countArrSum([1,2,[3,4,[5,6,[7]]], [8,[9,10]], [11,12,[13, 14, [15]]]]));
+
+
+	// sum numbers in bignum till get 9
+
+	function sumNums(n){
+		let num = n.toString(); // n+'';
+		let res = 0;
+		for(let i = 0; i < num.length; i++){
+			res += +num[i];
+		}
+		if(res > 9){
+			return sumNums(res);
+		}
+		else{
+			return res;
+		}
+	}
+
+	console.log(sumNums(29673));
+
+
+	// HW get fibonacci num recursively
 
 
 </script>
