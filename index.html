@@ -11,282 +11,69 @@
 
 <script>
 
-	// console nums 1-50, кратные трем заменяем на fizz , кратные 5 - buzz, кратные 3 & 5 fizzbuzz
+// bubble sort
+	let arr = [5,8,1,9,2,6,3,7,4];
 
-	// for(let i = 1; i <= 50; i++){
-	// 	if(i%3 == 0 && i%5 == 0){
-	// 		console.log('fizzbuzz');
-	// 	}
-	// 	else if(i%3 == 0){
-	// 		console.log('fizz');
-	// 	}
-	// 	else if(i%5 == 0){
-	// 		console.log('buzz');
-	// 	}
-	// 	else{
-	// 		console.log(i);
-	// 	}
-	// }
-
-
-	// chess # ' ' 8*8
-	// let size = 8;
-
-	// for(let i = 0; i < size; i++ ){
-	// 	let str = '';
-		
-	// 	for(let j = 0; j < size; j++){
- // 			if(i%2 == 0 && j%2 == 0 || i%2 !== 0 && j%2 !== 0){ // если строка четная и четный символ или строка нечетная и нечетный символ, то добавляем в строку # 
- // 				str += '#';
- // 			}
- // 			else{ // во всех остальных случаях добавляем пробел
- // 				str += ' ';
- // 			}
-	// 	}
-	// 	console.log(str);
-	// }
-
-
-	// // треугольник из звездочек
-
-	// let count = 5;
-	// let s = '';
-
-	// for(let i = 0; i < count; i++){
-	// 	s += '*';
-	// 	console.log(s);
-	// }
-
-
-	// равнобедренный треугольник из звездочек
-
-	// let size = 11;
-
-	// for(let i = 0; i < size; i++){
-	// 	let str = '';
-	// 	let half = size/2 % 0 ? size/2 + 0.5 : size/2;
-
-	// 	if(i <= half){
-	// 		for(let j = 0; j <= i; j++){
-	// 			str += '*';
-	// 		}
-	// 	}
-	// 	else{
-	// 		str = '';
-	// 		for(let j = 0; j < size - i; j++){
-	// 			str += '*';
-	// 		}
-	// 	}
-		
-	// 	console.log(str);
-	// }
-
-
-	// HW**** если захочется острых ощущений, построить через циклы ромб из *
-
-
-	// strings are immutable
-	let msg = 'hello';
-	msg[0] = 'H'; // ничего не изменится, первый символ останется 'h'
-
-	// str.length -> длина строки При этом длина на единицу больше последнего индекса, потому что первый индекс 0
-
-	for(let i = 0; i < msg.length; i++){
-		console.log(msg[i]);
-	}
-
-
-
-	// области видимости
-
-	//  let - область видимости - блок с {}
-	//  var - область видимости - function
-
-
-	let m = 80;
-	console.log(m);
-
-	for(let m = 0; m < 3; m++){
-		console.log(m);
-	}
-
-	if(3){
-		let m = 9;
-		console.log(m);
-	}
-
-
-	// var a = 10;
-
-	// if(a < 100){
-	// 	var a = 100;
-	// }
-
-	// console.log(a); // 100 - переменная перезаписана
-
-
-	// приведение типов
-
-	// 0 - undefined, false, null, '', 
-
-	let n = 12 + '54' - false + 6 + ''; // 1254 - 0 + 6 = 1260
-
-	// приводим к строке (если плюсуем к строке)
-	// приводим к числу, если что-то вычитаем
-	// приводим к булевым в блоке if()
-
-
-	// arrays
-
-
-	let arr = new Array(10);
-	let arr2 = [];
-	let arr3 = [1,2,3, false, null, 'asd'];
-
-	for(let i = 0; i < 10; i++){
-		arr2[i] = i;
-	}
-
-	for(let j = 0; j < arr.length; j++ ){
-		arr[j] = j+8;
-	}
-
-
-	let x = 10;
-	let y = 7;
-
-	let z = y;
-	y = 8;
-
-	// массивы мутабельны, данные хранятся по ссылке
-
-
-	const bb = [9,8,7,6,5,4,3,2,1];
-	// bb[0] = 10; // мы не можем перезаписать в b никакое другое значение, кроме ссылки на массив, но сам массив мы можем изменять
-	
-	let reversed = [];
-
-	for(let i = bb.length - 1; i >= 0; i--){
-		reversed[bb.length - i - 1] = bb[i]; // 9 - 8 - 1
-	}
-
-
-	let phrase = 'Hello World';
-	let p = [];
-	for(let i = 0; i < phrase.length; i++){
-		p[i] = phrase[i];
-	}
-
-	console.log(p);
-
-	
-	let arr4 = [-1,3,5,-4,6,9,-7,88,-12,54];
-	let pos = [];
-	let index = 0;
-
-	for(let i = 0; i < arr4.length; i++){
-		if(arr4[i] > 0){
-			pos[index] = arr4[i]; 
-			index++;
-		}
-	}
-	console.log(pos);
-
-
-	let arr5 = [9,7,4,-2, 4, 3, 6, 7, -11];
-
-	// найти число 3 - если да - вывести true, если нет - false
-	// let hasThree;
-
-	// for(let i = 0; i < arr5.length; i++){
-	// 	if(arr5[i] == 3){
-	// 		hasThree = true;
-	// 		break;
-	// 	}
-	// 	else{
-	// 		hasThree = false;
-	// 	}
-	// }
-
-	// 2
-	let hasThree = false;
-
-	for(let i = 0; i < arr5.length; i++){
-		if(arr5[i] == 3){
-			hasThree = true;
+	for(let i = 0; i < arr.length; i++){
+		for(let j = 0; j < arr.length-1; j++){
+			if(arr[j] > arr[j+1]){
+				let min = arr[j+1];
+				arr[j+1] = arr[j];
+				arr[j] = min;
+			}
+			
 		}
 	}
 
-	console.log(hasThree);
+	console.log(arr);
 
-	// continue в цикле - перейти к следующей итерации
 
-// найти сумму четных элементов массива
-	let arr6 = [9,7,4,-2, 4, 3, 6, 7, -11];
-	let sum = 0;
 
-	for(let i = 0; i < arr6.length; i++){
-		if(i%2 !== 0){
-			continue;
-		}
-		else{
-			sum += arr6[i];
-		}
+	//  chess
+
+	let arruza = 0.000019;
+	let price = 1; // usd
+
+
+	let rice_count = 1; // short version rc = 1+ Math.pow(2,63);
+	let rice_weight = 0;
+
+	for(let i = 0; i < 64; i++){
+		let additionalCount = Math.pow(2, i);
+		rice_weight += additionalCount * arruza;
 	}
 
-
-	//  коэффициенты квадратного уравнения принимаем через prompt и выводим в консоли корни квадратного уравнения
-
-	// let a = +prompt('Type a', 0);
-	// let b = +prompt('Type b', 0);
-	// let c = +prompt('Type c', 0);
-
-	// console.log(`${a}x^2 + ${b}x + ${c} = 0`);
-
-	// let d = b*b - 4*a*c;
-
-	// let x1, x2;
-
-	// if(d > 0){
-	// 	x1 = (-b + Math.sqrt(d))/(2*a);
-	// 	x2 = (-b - Math.sqrt(d))/(2*a);
-	// 	console.log(`x1 = ${x1}, x2 = ${x2}`);
-	// }
-	// else if(d == 0){
-	// 	x1 = x2 = -b/(2*a);
-	// 	console.log(`x = ${x1}`);
-	// }
-	// else{
-	// 	console.warn('рівняння не має дійсних коренів');
-	// }
+	console.log(rice_weight);
 
 
+// 11е число Фибоначчи
 
-	// HW bubble sort arr = [5,8,1,9,2,6,3,7,4]
+	let fib = 11;
 
-	// решить задачу про мудреца и шахматы - посчитать сумму в долларах, на которую "прилип" шейх, для этого учитываем вес 1 зерна - 1 арруза (0.019г) и цена за кг риса 1$
+	let a = 1;
+	let b = 1;
+	let c;
 
-	// посчитать 11е число Фибоначчи при условии, что ряд начинаем с 1
+	let fibNum;
 
-
-
-	//  посчитать среднеарифметическое arr6
-
-	arr6[9] = 'fff';
-	let summ = 0;
-	let notnums = 0;
-	for(let i = 0; i < arr6.length; i++){
-		if(typeof(arr6[i]) != 'number'){
-			notnums++;
-			continue;
-		}
-		else{
-			summ += arr6[i];
-		}
+	for(let i = 2; i <= fib; i++){
+		c = a + b;
+		a = b;
+		b = c;
+		fibNum = c;
 	}
 
-	let sr = summ/(arr6.length - notnums);
-	console.log(sr);
+	console.log(fibNum);
+
+
+	let fibArr = [1,1];
+
+	for(let i = 2; i <= fib; i++){
+		fibArr[i] = fibArr[i-1] + fibArr[i-2];
+	}
+	console.log(fibArr);
+
+
 
 </script>
 
