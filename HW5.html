@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<title>hw5</title>
+<body>
+</body>
+<script>
+// Сделайте функцию, которая принимает параметром число от 1 до 7, а возвращает день недели на русском языке.
+function day(d){
+    switch(d){
+        case 1:
+            console.log(`Понедельник`);
+            break;
+        case 2:
+            console.log(`Вторник`);
+            break;
+        case 3:
+            console.log(`Среда`);
+            break;
+        case 4:
+            console.log(`Четверг`);
+            break;
+        case 5:
+            console.log(`Пятница`);
+            break;
+        case 6:
+            console.log(`Суббота`);
+            break;
+        case 7:
+            console.log(`Воскресенье`);
+            break;
+        default:
+            break;
+    }  
+}
+for (let i=0;i<1;){
+    var Day=+prompt(`Введите день недели от 1 до 7`,1);
+    if (typeof(Day) == `number`  && Day>0 && Day<8){
+        i++;
+        day(Day);
+    }
+    else{
+        alert(`Не коректное значение!`);
+    }
+}
+</script>
+</html>

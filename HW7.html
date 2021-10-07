@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<title>hw7</title>
+<body>
+</body>
+<script>
+// Дан массив с числами. Проверьте, есть ли в нем два одинаковых числа подряд. Если есть - выведите 'да', а если нет - выведите 'нет'.
+var numbers=0;
+for (let i=0;i<1;){
+    numbers=+prompt(`Введите количество елементов массива`,1);
+    if (typeof(numbers)==`number` && numbers>0){
+        i++;
+    }
+    else{
+        alert(`Не коректное значение`);
+    }
+}
+var arr=[];
+for (let i=0;i<numbers;){
+    arr[i]=+prompt(`Ведите ${i+1}-е значение массива`,1);
+    if (typeof(arr[i])==`number` && arr[i]>0){
+        i++;
+    }
+    else{
+        alert(`Не коректное значение`);
+    }
+}
+var check=false;
+for (let i=0;i<numbers;i++){
+    for (let j=i+1;j<numbers-1;j++){
+        if (arr[i]==arr[j]){
+            check=true;
+        }
+    }
+} 
+(check == true) ? console.log(`ДА в массиве есть два одинаковых числа подряд`) : console.log(`НЕТ, в массиве нет двух одинаковых чисел подряд`);
+</script>
+</html>
+
