@@ -11,109 +11,268 @@
 
 <script>
 
-	// HW get fibonacci num recursively
+// в скольких числах от 1 до 1000 есть число три (333, 33, 233 - одно повторение тройки)
 
-
-	function fib(n, a, b, curr = 3){
-		let c = a+b;
-		a = b;
-		b = c;
-		if(curr < n){
-			curr++;
-			return fib(n, a, b, curr);
-		}
-		else{
-			return c;
-		}
-	}
-
-	console.log(fib(11, 1, 1));
-
-
-	// 2 
-
-	let arr = [10, 20, 30, 50, 235, 3000];
-
-	function checkFirstDigit(a){
-		for(let i = 0; i< a.length; i++){
-			let num = a[i].toString()[0];
-			if(num == '1' || num == '2' || num == '5'){
-				console.log(+a[i]);
+	function hasNum(digit, num){
+		let hasDigit = false;
+		num = num.toString();
+		for(let i = 0; i < num.length; i++){
+			if(num[i] == digit){
+				hasDigit = true;
 			}
 		}
+		return hasDigit;
 	}
 
-	checkFirstDigit(arr);
-
-
-	// 3 
-	let arr2 = [1,2,3,4,5,6,7,8,9];
-
-	function createStr(a){
-		let str = '-';
-		for(let i = 0; i< a.length; i++){
-			str += `${a[i]}-`;
+	function countDigits(n, digit){
+		let count = 0;
+		for(let i = 0; i < n; i++){
+			if(hasNum(digit, i)){
+				count++;
+			}
 		}
-		console.log(str);
+		console.log(count);
 	}
-	createStr(arr2);
 
-	// 4 
 
-	let n = 1000;
-	let j = 0;
-	while(n>50){
-		n = n/2;
-		j++
+	countDigits(1000, 3);
+
+
+	// в книге н страниц от 1 до н Если сложить количество цифр, содержащееся в каждом номере страницы, получится 1095
+
+	function countPages(p){
+		let pageNums = 1;
+		let pagesnumsSum = 0;
+		while (pagesnumsSum < p){
+			pageNums++;
+			pagesnumsSum += countDigitsInNum(pageNums);
+		}
+		console.log(pageNums);
 	}
-	console.log(`n: ${n}, iterations: ${j}`);
 
-	// 5
+	function countDigitsInNum(num){
+		num = num.toString();
+		return  num.length;
+	}
 
-	function checkDividors(num){
-		let hasDiv = false;
-		for(let i = 2; i< num; i++){
+	countPages(1095);
+
+
+	// get divisors
+
+	function getDivisors(num){
+		let arr = [];
+		let index = 0;
+		for(let i = 1; i <= num; i++){
 			if(num%i == 0){
-				hasDiv = true;
+				arr[index] = i;
+				index++;
 			}
-		}
-		return hasDiv;
+		}	
+		console.log(arr);
 	}
 
-	console.log(checkDividors(15));
+	getDivisors(30);
 
 
-	// 7 
+	// arr from 10 rand els [1-10], find sum
 
-	function checkNeibNums(a){
-		let res = 'no';
-		for(let i = 0; i < a.length -1; i++){
-			if(a[i] == a[i+1]){
-				res = 'yes';
-			}
-		}
-		console.log(res);
-	}
-	checkNeibNums(arr);
-	checkNeibNums([1,2,2,345]);
-
-
-	// 8
-
-	function isEven(num){
-		if(num%2 == 0){
-			console.log(true);
-		}
-		else{
-			console.log(false);
-		}
+	function getRandomInt(max) {
+	  return Math.floor(Math.random() * max + 1);
 	}
 
-	isEven(4);
-	isEven(7);
+	function sumArr(max){
+		let arr = [];
+		let index = 0;
+
+		for(let i = 0; i < max; i++){
+			arr[index] = getRandomInt(max);;
+			index++;
+		}
+
+		console.log(arr);
+		let sum = 0;
+		for(let j = 0; j < arr.length;j++){
+			sum += arr[j];
+		}
+		console.log(`sum: ${sum}`);
+	}
+
+	sumArr(10);
+
+
+//  closures
+
+	let name = 'Ann';
+
+	function sayHi(){
+		// LE = {name: 'Ann', phrase: undefined}
+		var phrase = `Hi, ${name}`;
+		// LE = {name: 'Ann', phrase: 'Hi, Ann'}
+		console.log(phrase);
+	}
+
+	sayHi();
+
+	name = 'Mary';
+	sayHi();
+
+	// при вызове функции создается обьект LexicalEnviroment, в который записываются значения всех внутренних и внешних переменных, которые использует эта функция
+
+	// замыканием называют функцию высшего порядка, которая использует глобальные переменные и "запоминает" их значения на момент вызова
+
+	function createCounter(){
+		let count = 0;
+
+		return function(){
+			console.log(++count);
+		}
+	}
+
+	let counter = createCounter();
+	counter();
+	counter();
+	counter();
+	counter();
+
+	let counter2 = createCounter();
+	counter2();
+	counter2();
+
+
+	let colors = ['red', 'green', 'blue', 'white', 'black'];
+
+	function makePainter(){
+		let index = 0;
+
+		return function(){
+			console.log(colors[index]); // or add style for slider
+			index = index < colors.length-1 ? ++index : 0;
+		}
+	}
+
+	let showColor = makePainter();
+	showColor();
+	showColor();
+	showColor();
+	showColor();
+	showColor();
+	showColor();
+
+
+//  ... в конце списка параметров, которые принимает функция - остаточные параметры, ... при вызове функции - оператор расширения ()
+
+//  оператор расщирения превращает массив в список его элентов, а оператор остаточных параметров собирает лишние параметры функции в массив
+
+
+	function sumElems(){
+		let sum = 0;
+		for(let i = 0; i < arguments.length; i++){
+			sum += arguments[i];
+		}
+		return sum;
+	}
+
+	console.log(sumElems(1,2,3));
+
+	let arr3 = [1,2,3,4,5];
+
+	console.log(sumElems(arr3)); // 01,2,3,4,5 => 0 + arr
+	console.log(sumElems(...arr3));
+
+	console.log(Math.max(1,2,5));
+	console.log(Math.max(arr3)); // NaN
+	console.log(Math.max(...arr3)); // 5
+
+	// параметры по умолчанию - заменят undefined на предустановленное значение в случае вызова функции без аргументов
+
+	function greeting(phrase = 'Hi', username = 'Stranger', ...rest){
+		let msg = `${phrase}, ${username}.`;
+
+		if(rest.length > 0){
+			for(let i = 0; i < rest.length; i++){
+				msg += ` ${rest[i]}`;	
+			}	
+		}
+		console.log(msg);
+	}
+
+	greeting('Salu', 'John');
+	greeting('Hello' );
+	greeting( );
+	greeting("Good evening", 'Peter', 'How are you?', 'Check your emails');
+	greeting("Good evening", 'Peter', 'How are you?', 'Check your emails');
+
+
+	greeting(...arr3);
+
+// objects
+
+	let obj = {
+		name: 'Mary',
+		lastname: 'Day',
+		age: 20,
+		city: 'LA',
+		hobbys: ['cooking', 'football', 'soapmaking']
+	}
+
+	console.log(obj.name);
+	console.log(obj['age']);
+
+	obj.age = 33;
+
+
+//  если в обьекте обратиться к несуществующему свойству, его значение будет undefined
+	// for in - только для объектов
+	for (let prop in obj) {
+		console.log(`${prop}: ${obj[prop]}`);
+	}
+
+	// for of - для object iterable [], string
+	for(let num of arr3){
+		console.log(num);
+	}
+
+
+	//  деструктуризация
+
+	let [greet, username] = ['Hello', 'Ann']; // let username = arr[i]
+
+	let [n, ln, ...another] = ['John', 'Doe', 'English', 'Teacher'];
+
+	let options = {
+		width: 400,
+		height: 200,
+		elname: 'slider',
+	};
+
+
+	let {width, height, elname} = options;
+	let {width: w, height: h, elname: en} = options;
+
+	let {city, hobbys, ...userinfo} = obj;
+
+	// при деструктуризации остаточный параметр будет иметь такой же тип, как и то, что мы деструктуризировали 
+
+
+	let user = {
+		name: 'Vasily',
+		pass: '12345'
+	};
+
+	let admin = {
+		name: 'DrCoder',
+		pass: 'jdfknvdfknvdkl%$%#888'
+	};
+
+	user = admin;
+	user.pass = '666';
+
+	console.log(user);
+
+
 
 </script>
-
 
 </body>
 </html>
