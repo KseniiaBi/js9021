@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<title>hw6</title>
+<body>
+</body>
+<script>
+// Напишите функции для умножения и вычитания целых чисел, используя из арифметических операций только оператор суммирования.
+function Multiplication(){
+    let mul=0;
+    for (let i=1;i<=b;i++){
+        mul=mul+a;
+    }
+    return mul;
+}
+function Division(){
+    let div=a;
+    let i=0;
+    while(div>0){
+        div=div+(-b);
+        i++;
+    }
+    return i;
+}
+let a=0;
+let b=0;
+let res=0;
+do{
+    a=+prompt(`Введите а`,1);
+    b=+prompt(`Введите b`,1);
+}while(isNaN(a)||isNaN(b));
+res=confirm(`Нажмите Ок если хотите умножить а на b или Отмена если вычесть`)? Multiplication(): Division();
+console.log(res);
+</script>
+</html>

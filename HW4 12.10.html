@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<title>hw4</title>
+<body>
+</body>
+<script>
+// Пусть теперь в переменной lang хранится язык (она принимает одно из значений или 'ru', или 'en' - либо то, либо то), а в переменной day - номер дня. 
+// Выведите словом день недели, соответствующий переменным lang и day. То есть: если, к примеру, lang = 'ru' и day = 3 - то выведем 'среда'.
+let lang=0;
+let day=0;
+let weekrus={
+    1:`Понедельник`,
+    2:`Вторник`,
+    3:`Среда`,
+    4:`Четверг`,
+    5:`Пятница`,
+    6:`Суббота`,
+    7:`Воскресенье`
+}
+let weeken={
+    1:`Monday`,
+    2:`Tuesday`,
+    3:`Wednesday`,
+    4:`Thursday`,
+    5:`Friday`,
+    6:`Saturday`,
+    7:`Sunday`
+}
+do{
+   lang=prompt(`ru or en`,`ru`);
+   day=+prompt(`Number of the day 1-7`,1);
+}while((day<=0) || (day>8)||(lang!=`en`)&&(lang!=`ru`));
+function dayOfweek(la,d){
+    answer=0;
+    if (la==`ru`){
+    answer=`${d} день недели это ${weekrus[d]}`;
+    }
+    else {answer=`${d} day of the week is ${weeken[d]}`;
+    }
+    return answer;
+}
+console.log(dayOfweek(lang,day));
+</script>
+</html>
