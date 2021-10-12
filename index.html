@@ -11,266 +11,156 @@
 
 <script>
 
-// в скольких числах от 1 до 1000 есть число три (333, 33, 233 - одно повторение тройки)
 
-	function hasNum(digit, num){
-		let hasDigit = false;
-		num = num.toString();
-		for(let i = 0; i < num.length; i++){
-			if(num[i] == digit){
-				hasDigit = true;
+// 	1)Дан массив [ [1, 2, 3], [4, 5, 6], [7,8,9] ]. Выведите на экран цифру 4 из этого массива.
+// arr[1][0]
+
+// 2) Сделайте функцию isNumberInRange, которая параметром принимает число, начало и конец диапазона и проверяет, что оно больше начала  и меньше конца. Если это так - пусть функция возвращает true, если не так - false.
+
+function isNumberInRange(num, start, end){
+	let isOk = false;
+	if(num >= start && num <= end){
+		isOk = true;
+	}
+	console.log(isOk);
+}
+
+isNumberInRange(3,1, 10);
+isNumberInRange(13,1, 10);
+
+// 3) Создайте объект с днями недели. Ключами в нем должны служить номера дней от начала недели (понедельник - первый и т.д.). Выведите на экран текущий день недели.
+// days['2'] => vtornik
+
+// 4) Пусть теперь в переменной lang хранится язык (она принимает одно из значений или 'ru', или 'en' - либо то, либо то), а в переменной day - номер дня. Выведите словом день недели, соответствующий переменным lang и day. То есть: если, к примеру, lang = 'ru' и day = 3 - то выведем 'среда'.
+
+
+let days = {
+	en: {
+		1: 'Mo',
+		2: 'Tue',
+		3: 'Wed'
+		// ...
+	},
+	ru: {
+		1: 'Пн',
+		2: 'Вт',
+		3: 'Ср'
+		// ...
+	}
+}
+// let lang = confirm('En or ru') ? 'en' : 'ru';
+// let day = +prompt('Type day num 1-7');
+
+// console.log(days[lang][day]);
+
+// 5) Оператор == сравнивает переменные объектов, проверяя, ссылаются ли они на один объект. Но иногда полезно было бы сравнить объекты по содержимому.Напишите функцию deepEqual, которая принимает два значения и возвращает true, только если это два одинаковых значения или это объекты, свойства которых имеют одинаковые значения, если их сравнивать рекурсивным вызовом deepEqual.Чтобы узнать, когда сравнивать величины через ===, а когда – объекты по содержимому, используйте оператор typeof. Если он выдаёт “object” для обеих величин, значит нужно делать глубокое сравнение. Не забудьте об одном исключении, случившемся из-за исторических причин: “typeof null” тоже возвращает “object”.
+
+function deepEqual(o1, o2){
+	if(typeof(o1) == typeof(o2) && typeof(o1) != 'object'){
+		if(o1 == o2){
+			return true;
+		}
+	}
+	else{
+		if(o1 === null || o2 === null){
+			if( o1 != o2){
+				return false;
+			}
+			else{
+				return true;
 			}
 		}
-		return hasDigit;
-	}
 
-	function countDigits(n, digit){
-		let count = 0;
-		for(let i = 0; i < n; i++){
-			if(hasNum(digit, i)){
-				count++;
+		let areEqual = false;
+		let o1Count = 0;
+		let o2Count = 0;
+
+		for(let prop in o1){
+			o1Count++;
+		}
+		for(let prop in o2){
+			o2Count++;
+		}
+
+		if(o1Count != o2Count){
+			return areEqual;
+		}
+		else{
+			let eqalProps = 0;
+			for(let key in o1){
+				if(o1[key] === o2[key]){
+					eqalProps++;
+				}
 			}
-		}
-		console.log(count);
-	}
-
-
-	countDigits(1000, 3);
-
-
-	// в книге н страниц от 1 до н Если сложить количество цифр, содержащееся в каждом номере страницы, получится 1095
-
-	function countPages(p){
-		let pageNums = 1;
-		let pagesnumsSum = 0;
-		while (pagesnumsSum < p){
-			pageNums++;
-			pagesnumsSum += countDigitsInNum(pageNums);
-		}
-		console.log(pageNums);
-	}
-
-	function countDigitsInNum(num){
-		num = num.toString();
-		return  num.length;
-	}
-
-	countPages(1095);
-
-
-	// get divisors
-
-	function getDivisors(num){
-		let arr = [];
-		let index = 0;
-		for(let i = 1; i <= num; i++){
-			if(num%i == 0){
-				arr[index] = i;
-				index++;
+			if(eqalProps == o1Count){
+				areEqual = true;
 			}
-		}	
-		console.log(arr);
-	}
-
-	getDivisors(30);
-
-
-	// arr from 10 rand els [1-10], find sum
-
-	function getRandomInt(max) {
-	  return Math.floor(Math.random() * max + 1);
-	}
-
-	function sumArr(max){
-		let arr = [];
-		let index = 0;
-
-		for(let i = 0; i < max; i++){
-			arr[index] = getRandomInt(max);;
-			index++;
-		}
-
-		console.log(arr);
-		let sum = 0;
-		for(let j = 0; j < arr.length;j++){
-			sum += arr[j];
-		}
-		console.log(`sum: ${sum}`);
-	}
-
-	sumArr(10);
-
-
-//  closures
-
-	let name = 'Ann';
-
-	function sayHi(){
-		// LE = {name: 'Ann', phrase: undefined}
-		var phrase = `Hi, ${name}`;
-		// LE = {name: 'Ann', phrase: 'Hi, Ann'}
-		console.log(phrase);
-	}
-
-	sayHi();
-
-	name = 'Mary';
-	sayHi();
-
-	// при вызове функции создается обьект LexicalEnviroment, в который записываются значения всех внутренних и внешних переменных, которые использует эта функция
-
-	// замыканием называют функцию высшего порядка, которая использует глобальные переменные и "запоминает" их значения на момент вызова
-
-	function createCounter(){
-		let count = 0;
-
-		return function(){
-			console.log(++count);
+			return areEqual;
 		}
 	}
-
-	let counter = createCounter();
-	counter();
-	counter();
-	counter();
-	counter();
-
-	let counter2 = createCounter();
-	counter2();
-	counter2();
+}
 
 
-	let colors = ['red', 'green', 'blue', 'white', 'black'];
+let obj = {
+	name: 'Dan',
+	book: 'A&D'
+}
 
-	function makePainter(){
-		let index = 0;
+let author = {
+	name: 'Dan',
+	book: 'A&D'
+}
 
-		return function(){
-			console.log(colors[index]); // or add style for slider
-			index = index < colors.length-1 ? ++index : 0;
-		}
+console.log(deepEqual(obj, author));
+
+let obj2 = {
+	name: 'Dan',
+	book: 'A&D',
+	age: 22
+}
+console.log(deepEqual(obj, obj2));
+
+let admin = {
+	pass: '34wrterg',
+	role: 'admin'
+}
+
+console.log(deepEqual(admin, author));
+
+console.log(deepEqual(admin, null));
+console.log(deepEqual(null, null));
+console.log(deepEqual(2, 2));
+console.log(deepEqual(2, '2'));
+
+
+// 6) Напишите функции для умножения и вычитания целых чисел, используя из арифметических операций только оператор суммирования.
+
+
+function mul(n, m){
+	let result = n;
+	for(let i = 1; i < m; i++){
+		result += n;
+	}
+	console.log(result);
+}
+
+mul(2,5);
+mul(3,4);
+
+
+function extr(a, b){
+	for(let i = 0; i < b; i++){
+		a += -1;
 	}
 
-	let showColor = makePainter();
-	showColor();
-	showColor();
-	showColor();
-	showColor();
-	showColor();
-	showColor();
+	console.log(a);
+}
+
+extr(10,4);
+extr(10,12);
 
 
-//  ... в конце списка параметров, которые принимает функция - остаточные параметры, ... при вызове функции - оператор расширения ()
-
-//  оператор расщирения превращает массив в список его элентов, а оператор остаточных параметров собирает лишние параметры функции в массив
-
-
-	function sumElems(){
-		let sum = 0;
-		for(let i = 0; i < arguments.length; i++){
-			sum += arguments[i];
-		}
-		return sum;
-	}
-
-	console.log(sumElems(1,2,3));
-
-	let arr3 = [1,2,3,4,5];
-
-	console.log(sumElems(arr3)); // 01,2,3,4,5 => 0 + arr
-	console.log(sumElems(...arr3));
-
-	console.log(Math.max(1,2,5));
-	console.log(Math.max(arr3)); // NaN
-	console.log(Math.max(...arr3)); // 5
-
-	// параметры по умолчанию - заменят undefined на предустановленное значение в случае вызова функции без аргументов
-
-	function greeting(phrase = 'Hi', username = 'Stranger', ...rest){
-		let msg = `${phrase}, ${username}.`;
-
-		if(rest.length > 0){
-			for(let i = 0; i < rest.length; i++){
-				msg += ` ${rest[i]}`;	
-			}	
-		}
-		console.log(msg);
-	}
-
-	greeting('Salu', 'John');
-	greeting('Hello' );
-	greeting( );
-	greeting("Good evening", 'Peter', 'How are you?', 'Check your emails');
-	greeting("Good evening", 'Peter', 'How are you?', 'Check your emails');
-
-
-	greeting(...arr3);
-
-// objects
-
-	let obj = {
-		name: 'Mary',
-		lastname: 'Day',
-		age: 20,
-		city: 'LA',
-		hobbys: ['cooking', 'football', 'soapmaking']
-	}
-
-	console.log(obj.name);
-	console.log(obj['age']);
-
-	obj.age = 33;
-
-
-//  если в обьекте обратиться к несуществующему свойству, его значение будет undefined
-	// for in - только для объектов
-	for (let prop in obj) {
-		console.log(`${prop}: ${obj[prop]}`);
-	}
-
-	// for of - для object iterable [], string
-	for(let num of arr3){
-		console.log(num);
-	}
-
-
-	//  деструктуризация
-
-	let [greet, username] = ['Hello', 'Ann']; // let username = arr[i]
-
-	let [n, ln, ...another] = ['John', 'Doe', 'English', 'Teacher'];
-
-	let options = {
-		width: 400,
-		height: 200,
-		elname: 'slider',
-	};
-
-
-	let {width, height, elname} = options;
-	let {width: w, height: h, elname: en} = options;
-
-	let {city, hobbys, ...userinfo} = obj;
-
-	// при деструктуризации остаточный параметр будет иметь такой же тип, как и то, что мы деструктуризировали 
-
-
-	let user = {
-		name: 'Vasily',
-		pass: '12345'
-	};
-
-	let admin = {
-		name: 'DrCoder',
-		pass: 'jdfknvdfknvdkl%$%#888'
-	};
-
-	user = admin;
-	user.pass = '666';
-
-	console.log(user);
-
-
+//  **** divide (use proportions)
 
 </script>
 
