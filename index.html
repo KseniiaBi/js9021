@@ -11,156 +11,158 @@
 
 <script>
 
-
-// 	1)Дан массив [ [1, 2, 3], [4, 5, 6], [7,8,9] ]. Выведите на экран цифру 4 из этого массива.
-// arr[1][0]
-
-// 2) Сделайте функцию isNumberInRange, которая параметром принимает число, начало и конец диапазона и проверяет, что оно больше начала  и меньше конца. Если это так - пусть функция возвращает true, если не так - false.
-
-function isNumberInRange(num, start, end){
-	let isOk = false;
-	if(num >= start && num <= end){
-		isOk = true;
-	}
-	console.log(isOk);
-}
-
-isNumberInRange(3,1, 10);
-isNumberInRange(13,1, 10);
-
-// 3) Создайте объект с днями недели. Ключами в нем должны служить номера дней от начала недели (понедельник - первый и т.д.). Выведите на экран текущий день недели.
-// days['2'] => vtornik
-
-// 4) Пусть теперь в переменной lang хранится язык (она принимает одно из значений или 'ru', или 'en' - либо то, либо то), а в переменной day - номер дня. Выведите словом день недели, соответствующий переменным lang и day. То есть: если, к примеру, lang = 'ru' и day = 3 - то выведем 'среда'.
-
-
-let days = {
-	en: {
-		1: 'Mo',
-		2: 'Tue',
-		3: 'Wed'
-		// ...
+let admin = {
+	name: 'admin',
+	pass: '23kjhcos9p',
+	sayHi: function(){
+		console.log('Hi!');
 	},
-	ru: {
-		1: 'Пн',
-		2: 'Вт',
-		3: 'Ср'
-		// ...
+	administrate(hrs){
+		console.log(`Admin is administrating already ${hrs} hours!`);
 	}
 }
-// let lang = confirm('En or ru') ? 'en' : 'ru';
-// let day = +prompt('Type day num 1-7');
 
-// console.log(days[lang][day]);
+admin.sayHi();
+admin.administrate(3);
 
-// 5) Оператор == сравнивает переменные объектов, проверяя, ссылаются ли они на один объект. Но иногда полезно было бы сравнить объекты по содержимому.Напишите функцию deepEqual, которая принимает два значения и возвращает true, только если это два одинаковых значения или это объекты, свойства которых имеют одинаковые значения, если их сравнивать рекурсивным вызовом deepEqual.Чтобы узнать, когда сравнивать величины через ===, а когда – объекты по содержимому, используйте оператор typeof. Если он выдаёт “object” для обеих величин, значит нужно делать глубокое сравнение. Не забудьте об одном исключении, случившемся из-за исторических причин: “typeof null” тоже возвращает “object”.
 
-function deepEqual(o1, o2){
-	if(typeof(o1) == typeof(o2) && typeof(o1) != 'object'){
-		if(o1 == o2){
-			return true;
-		}
-	}
-	else{
-		if(o1 === null || o2 === null){
-			if( o1 != o2){
-				return false;
-			}
-			else{
-				return true;
-			}
-		}
+let arr = [1,2,-4,-6,4,90,-56,-32,24,55];
 
-		let areEqual = false;
-		let o1Count = 0;
-		let o2Count = 0;
+function isArrPositive(a){
+	let res = a.every(num => num > 0);
+	console.log(res);
+}
 
-		for(let prop in o1){
-			o1Count++;
-		}
-		for(let prop in o2){
-			o2Count++;
-		}
+isArrPositive(arr);
 
-		if(o1Count != o2Count){
-			return areEqual;
+function retArrPositives(a){
+	let res = a.filter(num => num > 0);
+	console.log(res);
+}
+
+retArrPositives(arr);
+
+let arr2 = [2,3,4,5];
+
+arr2.forEach((item,index) => console.log(`${index}: ${item}`));
+
+arr2.forEach(item => console.log(item*item));
+
+let a3 = new Array(10);
+console.log(a3);
+console.log(a3.join('wat'));
+console.log(a3.join('wat'-1));
+
+
+let arr3 = arr2.map(item => item*item);
+console.log(arr3);
+
+
+
+
+// practice
+
+let arr4 = [ [1, 2, 3], [4, 5, 6], [7,8,9] ];
+
+let b = arr4.reduce((total,a) => {
+	return total.concat(a);
+});
+
+console.log(b);
+
+ // flat - flattens array
+let c = arr4.flat();
+
+console.log(c);
+
+
+let arr5 = [2,3,4,2,5,6,7,2,8,9];
+
+// 1sp filter	
+// function findNum(ar, n){
+// 	let res = ar.filter(num => num == n);
+// 	console.log(res.length);
+// }
+
+function findNum(ar,n){
+	let instances = 0;
+	let i = 0;
+	while(i < ar.length){
+		let index = ar.indexOf(n, i);
+		if(index == -1){
+			return instances;
 		}
 		else{
-			let eqalProps = 0;
-			for(let key in o1){
-				if(o1[key] === o2[key]){
-					eqalProps++;
-				}
-			}
-			if(eqalProps == o1Count){
-				areEqual = true;
-			}
-			return areEqual;
+			instances+=1;
+			i = index+1;
 		}
 	}
+	return instances;
 }
 
+console.log(findNum(arr5, 2));
 
-let obj = {
-	name: 'Dan',
-	book: 'A&D'
+let collection = [1, 'hello', 888, false, 'tada!', 54, 23, -2, 'Oh no!', true];
+
+function createOrganizedCollection(a){
+	let obj = {};
+
+	a.forEach(item => {
+		if(obj[typeof(item)] == undefined){
+			obj[typeof(item)] = [item];
+		}
+		else{
+			obj[typeof(item)].push(item);
+		}
+	});
+
+	console.log(obj);
 }
 
-let author = {
-	name: 'Dan',
-	book: 'A&D'
+createOrganizedCollection(collection);
+
+
+let user = {
+	a: 5
 }
+console.log('a' in user);
 
-console.log(deepEqual(obj, author));
 
-let obj2 = {
-	name: 'Dan',
-	book: 'A&D',
-	age: 22
+function printArr(ar){
+	let str = `-${ar.join('-')}-`;
+	console.log(str);
 }
-console.log(deepEqual(obj, obj2));
-
-let admin = {
-	pass: '34wrterg',
-	role: 'admin'
-}
-
-console.log(deepEqual(admin, author));
-
-console.log(deepEqual(admin, null));
-console.log(deepEqual(null, null));
-console.log(deepEqual(2, 2));
-console.log(deepEqual(2, '2'));
+printArr(arr2);
 
 
-// 6) Напишите функции для умножения и вычитания целых чисел, используя из арифметических операций только оператор суммирования.
 
+// cоздать массив из 99 рандомных уникальных значений от 1 до 100 и найти какое число не попало в диапазон
 
-function mul(n, m){
-	let result = n;
-	for(let i = 1; i < m; i++){
-		result += n;
+function randArr(){
+	let arr = [];
+	let i = 0;
+	let arrSum = 0;
+	while(arr.length < 99){
+		let num = Math.floor(Math.random()*100 + 1);
+		if(!arr.includes(num)){
+			arrSum += num;
+			arr.push(num);
+		}
+		i++;
 	}
-	console.log(result);
-}
-
-mul(2,5);
-mul(3,4);
-
-
-function extr(a, b){
-	for(let i = 0; i < b; i++){
-		a += -1;
+	let sum = 0;
+	for(let i = 1; i <= 100; i++){
+		sum += i;
 	}
 
-	console.log(a);
+	// let arrSum = arr.reduce((a,b) => a+b);
+	let lost = sum - arrSum;
+	console.log(arr.sort());
+	console.log(lost);
 }
 
-extr(10,4);
-extr(10,12);
+randArr();
 
-
-//  **** divide (use proportions)
 
 </script>
 
