@@ -1,0 +1,127 @@
+<DOCTYPE! html>
+<html>
+	<head>
+		<title> "task1" </title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	</head>
+	<body>
+		<script>
+			// 4) Пусть теперь в переменной lang хранится язык (она принимает одно из значений или 'ru', или 'en' - либо то, либо то), а в переменной day - номер дня. Выведите словом день недели, соответствующий переменным lang и day. То есть: если, к примеру, lang = 'ru' и day = 3 - то выведем 'среда'.
+			
+			let en = {
+
+				1: "Mon",
+				2: "Tue",
+				3: "Wed",
+				4: "Thu",
+				5: "Fri",
+				6: "Sat",
+				7: "Sun",
+
+			};
+
+			let	ru = {
+
+				1: "Пн",
+				2: "Вт",
+				3: "Ср",
+				4: "Чт",
+				5: "Пт",
+				6: "Сб",
+				7: "Вс",
+			};	
+
+			let lang = 0
+			function isLang(whtlng, day){
+				for (let key in lang){
+					if (lang=en){
+						return (en[key])
+					}
+					else if (lang=ru){
+						return (ru[key])
+					}
+					else {
+						return false
+					}
+				}
+			}
+			console.log(isLang(en, 3));
+
+
+			
+
+
+			// function isLang(whtlng, key){
+			// 	if (whtlng=en) {
+
+			// 		return(lang.en.key)
+			// 	}
+			// 	else if (whtlng=ru) {
+			// 		return(lang.ru.key)
+			// 		}
+			// 	else {
+			// 		return("wrong language")
+			// 	}
+			// }
+			// let lang = {
+			// 	ru: {
+
+			// 				a: "Пн",
+			// 				b: "Вт",
+			// 				c: "Ср",
+			// 				d: "Чт",
+			// 				e: "Пт",
+			// 				f: "Сб",
+			// 				g: "Вс",
+
+			// 				},	
+			// 	en: {
+			// 
+			// 				a: "Mon",
+			// 				b: "Tue",
+			// 				c: "Wed",
+			// 				d: "Thu",
+			// 				e: "Fri",
+			// 				f: "Sat",
+			// 				g: "Sun",
+
+			// 				},
+			// };				
+			
+			// console.log(isLang(en, 4));
+
+			
+			// function isNumberInRange (min, max) {
+			// 	min = Math.ceil (min)
+			// 	max = Math.floor (max)
+
+			// 	return Math.random ()* (max-min)+min
+
+			// }
+				
+		
+			// 	alert(isNumberInRange(1,10))
+
+
+			// 	function isNumberInRange (min, max, num) {
+			// 	if (num > max || num < min) {
+			// 		return false
+			// 	}
+
+			// 	else {
+			// 		return true
+			// 	}
+
+			// }
+				
+		
+				// alert(isNumberInRange(1,6,7))
+				
+
+			
+		</script>	
+
+	</body>
+</html>
