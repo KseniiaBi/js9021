@@ -11,157 +11,227 @@
 
 <script>
 
-let admin = {
-	name: 'admin',
-	pass: '23kjhcos9p',
-	sayHi: function(){
-		console.log('Hi!');
-	},
-	administrate(hrs){
-		console.log(`Admin is administrating already ${hrs} hours!`);
+	let goods = [
+		{
+			name: 'Cup',
+			price: 99,
+		},
+		{
+			name: 'Plate small',
+			price: 119
+		},
+		{
+			name: 'Black Tea',
+			price: 159
+		},
+		{
+			name: 'Drip coffee Bag',
+			price: 30,
+		},
+		{
+			name: 'Tea bomb',
+			price: 19
+		}
+	];
+
+
+	function sortGoods(a, prop){
+		let arr = a.slice(); // копируем массив
+		arr.sort(function(a, b){
+			if(a[prop] > b[prop]){
+				return 1;
+			}
+			else if(a[prop] < b[prop]){
+				return -1;
+			}
+			else {
+				return 0;
+			}
+		});
+		console.log(arr);
 	}
-}
-
-admin.sayHi();
-admin.administrate(3);
 
 
-let arr = [1,2,-4,-6,4,90,-56,-32,24,55];
-
-function isArrPositive(a){
-	let res = a.every(num => num > 0);
-	console.log(res);
-}
-
-isArrPositive(arr);
-
-function retArrPositives(a){
-	let res = a.filter(num => num > 0);
-	console.log(res);
-}
-
-retArrPositives(arr);
-
-let arr2 = [2,3,4,5];
-
-arr2.forEach((item,index) => console.log(`${index}: ${item}`));
-
-arr2.forEach(item => console.log(item*item));
-
-let a3 = new Array(10);
-console.log(a3);
-console.log(a3.join('wat'));
-console.log(a3.join('wat'-1));
+	sortGoods(goods, 'name');
+	sortGoods(goods, 'price');
 
 
-let arr3 = arr2.map(item => item*item);
-console.log(arr3);
+	// String Methods
+
+	let s = 'hello';
+	console.log(s.charAt(0));
+	console.log(s.charCodeAt(0));	
 
 
-
-
-// practice
-
-let arr4 = [ [1, 2, 3], [4, 5, 6], [7,8,9] ];
-
-let b = arr4.reduce((total,a) => {
-	return total.concat(a);
-});
-
-console.log(b);
-
- // flat - flattens array
-let c = arr4.flat();
-
-console.log(c);
-
-
-let arr5 = [2,3,4,2,5,6,7,2,8,9];
-
-// 1sp filter	
-// function findNum(ar, n){
-// 	let res = ar.filter(num => num == n);
-// 	console.log(res.length);
-// }
-
-function findNum(ar,n){
-	let instances = 0;
-	let i = 0;
-	while(i < ar.length){
-		let index = ar.indexOf(n, i);
-		if(index == -1){
-			return instances;
+	function checkImg(imgname){
+		if(imgname.endsWith('.png') || imgname.endsWith('.jpg')){
+			console.log('User is ok');
 		}
 		else{
-			instances+=1;
-			i = index+1;
+			console.error('Invalid image format');
 		}
-	}
-	return instances;
-}
+	}	
 
-console.log(findNum(arr5, 2));
-
-let collection = [1, 'hello', 888, false, 'tada!', 54, 23, -2, 'Oh no!', true];
-
-function createOrganizedCollection(a){
-	let obj = {};
-
-	a.forEach(item => {
-		if(obj[typeof(item)] == undefined){
-			obj[typeof(item)] = [item];
-		}
-		else{
-			obj[typeof(item)].push(item);
-		}
-	});
-
-	console.log(obj);
-}
-
-createOrganizedCollection(collection);
+	checkImg('doc.pdf');
+	checkImg('pic.png');
 
 
-let user = {
-	a: 5
-}
-console.log('a' in user);
-
-
-function printArr(ar){
-	let str = `-${ar.join('-')}-`;
+	let str = '			  Hello World 		 	';
 	console.log(str);
-}
-printArr(arr2);
+	console.log(str.trim());
 
 
 
-// cоздать массив из 99 рандомных уникальных значений от 1 до 100 и найти какое число не попало в диапазон
+	// fn anagram (s1, s2) => true || false
+	//  Анаграмма - слово, которое является перестановкой букв базового с одинаковой длиной
 
-function randArr(){
-	let arr = [];
-	let i = 0;
-	let arrSum = 0;
-	while(arr.length < 99){
-		let num = Math.floor(Math.random()*100 + 1);
-		if(!arr.includes(num)){
-			arrSum += num;
-			arr.push(num);
+	function isAnagram(s1, s2){
+		if(s1.length !== s2.length){
+			return false;
 		}
-		i++;
-	}
-	let sum = 0;
-	for(let i = 1; i <= 100; i++){
-		sum += i;
+
+		let a1 = s1.split('').sort().join('');
+		let a2 = s2.split('').sort().join('');
+
+		if(a1 === a2){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
-	// let arrSum = arr.reduce((a,b) => a+b);
-	let lost = sum - arrSum;
-	console.log(arr.sort());
-	console.log(lost);
+
+	console.log(isAnagram('камыш', 'мышка' ));
+	console.log(isAnagram('камыш', 'каприз' ));
+
+
+
+	// fn border-left-color -> borderLeftColor
+
+	function camelize(str){
+		let arr = str.split('-');
+
+		let camelized = arr[0].toString();
+		for(let i = 1; i < arr.length; i++){
+			camelized += arr[i].charAt(0).toUpperCase() + arr[i].substr(1);
+		}
+
+		console.log(camelized);
+	}
+
+
+	camelize('border-left-color');
+
+	function isPalindrome(str){
+		let trs = str.split('').reverse().join(''); // превращаем строку в массив посимвольно и разворачиваем его в обратном порядке, потом побуквенно собираем из него строку
+		
+		// проверяем, что исходная строка и ее модификация равны и возвращаем результат
+		if(str === trs){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	console.log(isPalindrome('anna'));
+	console.log(isPalindrome('table'));
+
+
+ // найти количество гласных букв в слове ['a', 'e', 'i', 'o', 'u']
+
+ function countLetters(word){
+ 	return word.match(/[a,i,e,o,u]/gi).length;
+ }
+
+ console.log(countLetters('animal'));
+
+
+ // items in cart
+
+
+ function transformWord(count){
+ 	let word = 'товар';
+ 	count = count.toString();
+ 	let lastDigit = +(count.charAt(count.length-1));
+
+ 	// if(count%10 == 2 || count%10 == 3 || count%10 == 4){ // альтернатива - решение через count%10
+ 	if(lastDigit >= 2 && lastDigit <= 4){
+ 		word += 'а';
+ 	}
+ 	else if(lastDigit >= 5 || lastDigit == 0){
+ 		word += 'ов';
+ 	}
+
+ 	console.log(`В вашей корзине ${count} ${word}`);
+ }
+
+transformWord(0);
+transformWord(3);
+transformWord(6);
+transformWord(26);
+transformWord(63);
+
+
+function map(fn, arr){
+	return arr.map(fn);
 }
 
-randArr();
+function pow(item){
+	return Math.pow(item,2);
+}
+let arr = [2,3,4];
+console.log(map(pow, arr));
+
+
+// фн возводит каждый элемент в квадрат и возвращает сумму всех элементов
+
+function calc(a){
+	a = a.map(pow);
+	return a.reduce((total, num) => total + num);
+}
+
+console.log(calc(arr));
+
+
+// совпадения букв в двух словах  table animal => [a,l]
+
+
+function findSameLetters(s1, s2){
+	let a = [];
+
+	let a1 = s1.split('');
+	let a2 = s2.split('');
+
+	for(let ch of a1){
+		if(a2.includes(ch) && !a.includes(ch)){
+			a.push(ch);
+		}
+	}
+
+	return a;
+}
+
+console.log(findSameLetters( 'animal', 'table'));
+
+
+let mul = (a, b) => a*b; // let fnname = (params) => fn body
+
+arr.forEach(num => console.log(num*2));
+// arr.forEach(function(num){
+// 	console.log(num*2)
+// });
+
+// (2)(3) => 5
+
+function sum(a){
+	return function(b){
+		return a+b;
+	}
+}
+
+console.log(sum(2)(3)); //**
 
 
 </script>
