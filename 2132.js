@@ -25,10 +25,10 @@ let goods = [
 function sortGoods(a, prop, param) {
     let arr = a.slice(); // копируем массив
     arr.sort(function (a, b) {
-        if (a[prop] > b[prop] && a[param] > b[param]) {
+        if (a[prop] > b[prop] && a[param] < b[param]) {
             return 1;
         }
-        else if (a[prop] < b[prop] && a[param] > b[param]) {
+        else if (a[prop] < b[prop] && a[param] < b[param]) {
             return -1;
         }
         else {
@@ -38,3 +38,15 @@ function sortGoods(a, prop, param) {
     console.log(arr);
 }
 sortGoods(goods, 'name', 'price');
+
+
+
+
+let str = 'border-left-color';
+let rez = str.replace(/-/gi, " ");
+let rez2 = rez.replace(/b/, "B",);
+let rez3 = rez2.replace(/l/, "L");
+let rez4 = rez3.replace(/c/, "C");
+console.log(rez);
+console.log(rez4);
+
