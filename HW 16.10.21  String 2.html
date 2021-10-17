@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+</head>
+<body>
+
+
+
+<script>
+	// camelize using replace
+
+	// fn border-left-color -> borderLeftColor
+	let str ='border-left-color'
+
+		// 1 вариант
+
+		let str1= str.replace(/-l/g,"L").replace(/-c/g,"С");
+
+		console.log(str1);
+		
+		// 2 вариант
+
+		let str2 =str.slice(0,6) + str[7].toUpperCase() + str.slice(8,11)+str[12].toUpperCase() + str.slice(13);
+				
+		console.log(str2);
+	
+
+
+</script>
+
+</body>
+</html>
