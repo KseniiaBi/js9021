@@ -44,9 +44,29 @@ sortGoods(goods, 'name', 'price');
 
 let str = 'border-left-color';
 let rez = str.replace(/-/gi, " ");
-let rez2 = rez.replace(/b/, "B",);
-let rez3 = rez2.replace(/l/, "L");
-let rez4 = rez3.replace(/c/, "C");
+let rez2 = rez.replace(/\bb/, "B",);
+let rez3 = rez2.replace(/\bl/, "L");
+let rez4 = rez3.replace(/\bc/, "C");
 console.log(rez);
 console.log(rez4);
 
+// vowels
+
+function vowelCount(str) {
+    let splitString = str.split('');
+    let obj = {};
+    let vowels = "aeiou";
+    splitString.forEach((letter) => {
+        if (vowels.indexOf(letter.toLowerCase()) !== -1) {
+            if (letter in obj) {
+                obj[letter]++;
+            } else {
+                obj[letter] = 1;
+            }
+        }
+
+    });
+    return obj;
+}
+
+console.log(vowelCount('asdeaqokfficyrrdhgdrhhthtgoaeqwervxiiii'));
