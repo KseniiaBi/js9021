@@ -25,7 +25,7 @@ let goods = [
 function sortGoods(a, prop, param) {
     let arr = a.slice(); // копируем массив
     arr.sort(function (a, b) {
-        if (a[prop] > b[prop] && a[param] < b[param]) {
+        if (a[prop] < b[prop] && a[param] < b[param]) {
             return 1;
         }
         else if (a[prop] < b[prop] && a[param] < b[param]) {
@@ -70,3 +70,13 @@ function vowelCount(str) {
 }
 
 console.log(vowelCount('asdeaqokfficyrrdhgdrhhthtgoaeqwervxiiii'));
+
+
+let total = 0;
+let sum = function (value) {
+    total += value;
+    return sum;
+};
+
+sum(5)(8)(-4)(-1)(3)(-5)(1)(-3);
+console.log(total);
