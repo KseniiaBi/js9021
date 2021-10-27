@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<title>HW20</title>
+<body>
+</body>
+<script>
+//  Напишите код, который создаёт массив элементов представляющих собой сумму соответствующих элементов заданных массивов.
+function sumArr(...arr){
+    arrMod=[];
+    for (let i=0;i<arr.length;i++){
+        for (let j=0;j<arr[i].length;j++){
+            arrMod[i,j]=0;
+        }
+    }
+    for (let i=0;i<arrMod.length;i++){
+        for (let j=0;j<arr.length;j++){
+            arrMod[i]+=arr[j][i]===undefined?0:arr[j][i];
+        }
+    }
+    console.log(arrMod);
+}
+sumArr([1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]);
+sumArr([1],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1]);
+sumArr([3,7,9,4],[1,1,1,1,1]);
+sumArr([1,1,1],[1,1,1],[1,1,1]);
+sumArr([2,2],[2,2,2],[2,2,2,2]);
+sumArr([0],[10,10,10,10],[5,5,5,5,5,5,5]);
+</script>
+</html>
+

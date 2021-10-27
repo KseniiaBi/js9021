@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<title>HW22</title>
+<body>
+</body>
+<script>
+//  Напишите код, который находит наиболее часто используемый элемент массива.
+var arr1=[7, 'z', 'z', 'z', 3, 7, 'z', 7, 'z', 3, 5, 9, 7];
+function mostCommonlyUsedOfArrayElement(arr){
+    let arrObj=[];
+    let obj={};
+    for (let i=0;i<arr.length;i++){
+        obj[arr[i]]=0;
+        for (let j=0;j<arr.length;j++){
+        if (arr[i]===arr[j]){obj[arr[i]]+=1;}
+        }
+    }
+    let index=0;
+    for (prop in obj){
+        arrObj[index]=obj[prop];
+        index++;
+    }
+    let max=Math.max(...arrObj);
+        for (prop in obj){
+        if (obj[prop]!=max){delete obj[prop]}
+    }
+    console.log(obj);
+}
+mostCommonlyUsedOfArrayElement(arr1);
+</script>
+</html>
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<title>hw3</title>
+<body>
+</body>
+<script>
+// Найти не повторяющиеся числа:const arr = [1,2,3,4,1,2]; // [3,4]
+const arr = [1,2,3,4,1,2];
+let arr2 = arr.filter((cV, index,arrFun)=>{
+    let res=true;
+        for(let i in arrFun){
+            if (i==index){continue;}
+            else if (cV==arr[i]){res=false;}
+        }
+        if (res==true){return cV;}
+    });
+console.log(arr2);
+</script>
+</html>

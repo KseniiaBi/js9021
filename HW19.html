@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<title>HW19</title>
+<body>
+</body>
+<script>
+//  Напишите функцию getLast(array, n), которая возвращает фрагмент массива, содержащий последние 'n' элементов массива.
+function getLast(array, n){
+    let arr=[];
+    for (i=0;i<array.length-n;i++){
+        arr[i]=array[n+i];
+    }
+    console.log(array,n,arr);
+}
+getLast([1,2,3,4,5,6,7,8,9],5);
+getLast([1,2,3,4,5,6,7,8,9],1);
+getLast([1,2,3,4,5,6,7,8,9],8);
+getLast([1,2,3,4,5,6,7,8,9],7);
+getLast([`werfhg`,`ewruh`,`regert`,`erthueruth`,`erthuihrt`,`rethuerht`,`bvbskd`],5);
+getLast([`werfhg`,`ewruh`,`regert`,`erthueruth`,`erthuihrt`,`rethuerht`,`bvbskd`],2);
+</script>
+</html>
+

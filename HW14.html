@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<title>HW14</title>
+<body>
+</body>
+<script>
+// Напишите функцию, которая создаст массив из уникальных значений, которые есть в каждом из предоставленных массивов.
+//   * Ожидаемый результат: ([1, 2], [2, 3]) => [2]
+    function unicArr(arrX,arrY){
+        let set = new Set();
+        for (i=0;i<arrX.length;i++){
+            for (j=0;j<arrY.length;j++){
+            if (arrX[i]===arrY[j]){set.add(arrX[i])}
+            }
+        }
+        console.log(set);
+    }
+    unicArr([1, 2], [2, 3]);
+</script>
+</html>
+

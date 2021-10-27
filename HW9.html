@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<title>HW9</title>
+<body>
+</body>
+<script>
+//Напишите функцию, которая поверхностно находит пересечения объектов и возвращает объект пересечений.
+//* Ожидаемый результат: ({ a: 1, b: 2 }, { c: 1, b: 2 }) => { b: 2 }
+    function checkFun(obj1,obj2){
+        let objNew={};
+        for (let key1 in obj1){
+            for (let key2 in obj2){
+                if ((key1==key2)&&(obj1[key1]==obj2[key2])) {objNew[key1]=obj1[key1]}
+            }
+        }
+        return console.log(objNew);
+    }
+    checkFun({ a: 1, b: 2 }, { c: 1, b: 2 });
+</script>
+</html>
+

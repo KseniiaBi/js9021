@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<title>HW6</title>
+<body>
+</body>
+<script>
+    function objectret(x,y){
+    let res=[];
+    let i=0;
+    for (key in x){
+        if (key!=y){
+            res[i]=[`${key}`,x[key]];}
+        else continue;
+        i++;
+    }
+    return res;
+}
+console.log(objectret({a:1,b:2},`b`));
+</script>
+</html>
+

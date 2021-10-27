@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<title>HW24</title>
+<body>
+</body>
+<script>
+//  Перед вами переменная, содержащая строку. Напишите код, создащий массив, который будет состоять из строк, 
+// состоящих из предыдущего, текущего и следующего символа строки str. При написании данного кода, позаимствуйте у объека Array метод map.
+function change(currentValue, index, array){
+    let answer='';
+    let start=array[index-1]==undefined?'':array[index-1];
+    let end=array[index+1]==undefined?'':array[index+1];
+    answer=start+currentValue+end;
+    return answer;
+}
+let str = "JavaScript"; 
+let arr=[];
+let res=[];
+arr=str.split('');
+res=arr.map(change);
+console.log(res);//  [Ja,Jav,ava,vaS,aSc,Scr,cri,rip,ipt,pt] 
+</script>
+</html>
+

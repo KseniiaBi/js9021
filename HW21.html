@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<title>HW21</title>
+<body>
+</body>
+<script>
+//  Напишите функцию union, которая возвращает коллекцию  состоящую только из уникальных элементов из каждого массива. 
+function union(){
+    let arrRes=[];
+    let obj={};
+    let set = new Set();
+    for (let i=0;i<arguments.length;i++){
+        for (let j=0;j<arguments[i].length;j++){
+            set.add(arguments[i][j]);
+        }
+    }
+    for (let i of set){
+        obj[i]=0;
+        for (let j=0;j<arguments.length;j++){
+            for (let k=0;k<arguments[j].length;k++){
+                if (i===arguments[j][k]){obj[i]+=1;}
+            }
+        }
+    }
+    let index=0;
+    for (prop in obj){
+        if (obj[prop]==1){arrRes[index]=+prop;index++;}
+    }
+    console.log(arrRes);
+}
+union([1],[2],[3],[4],[5],[6]);
+union([1,2],[2,3],[3,6,4],[4,1,2],[5,6,6,6,6],[6]);
+union([1],[1],[1],[1],[1],[1],[1],[1],[1],[1]);
+union([1],[2,3],[3,6,2,4],[4,2],[5,6,6,6,6],[6]);
+union([1,2],[2,3],[3,6,4],[4,1,2],[5,6,6,6,6],[6]);
+</script>
+</html>
+

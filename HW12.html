@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<title>HW12</title>
+<body>
+</body>
+<script>
+// Напишите функцию, которая сравнивает два массива и возвращает true, если они идентичны.
+// * Ожидаемый результат: ([1, 2, 3], [1, 2, 3]) => true
+    function identity(arrX,arrY){
+        let res=false;
+        let counter=0;
+        if (arrY.length!=arrX.length){return console.log(res);}
+        else {
+            for (i=0;i<arrY.length;i++){
+            if (arrX[i]===arrY[i]){counter++}
+            }
+        }
+        if (counter===arrY.length) {res=true;}
+        return console.log(res);
+    }
+    identity([1, 2, 3], [1, 2, 3]);
+</script>
+</html>
+

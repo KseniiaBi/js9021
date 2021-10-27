@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<title>hw2</title>
+<body>
+</body>
+<script>
+// Нечётные числа должны отсортироваться по возрастанию, а чётные должны остаться на своих местах: 
+const nums = [1,9,4,2,3,6,7,1,5]; // [1,1,4,2,3,6,5,7,9]
+function sortFun(...arr){
+    for (let i=0;i<arr.length;i++){
+        for (let j=0;j<arr.length;j++){
+            if (arr[i]%2!=0&&arr[j]%2!=0){
+                let mid=0;
+                if (arr[i]<arr[j]){mid=arr[i]; arr[i]=arr[j];arr[j]=mid;}
+            }
+        }
+    }
+console.log(arr);;
+}
+sortFun(...nums);
+</script>
+</html>
