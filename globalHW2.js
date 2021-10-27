@@ -45,3 +45,26 @@ let nArray = (array, n) => {
 console.log(nArray([1, 3, 5, 7, 9, 11, 13, 15, 17], 2))
 
 //====================
+
+let arr1 = [1, 2, 3, 7, 8, 9, 13];
+let arr2 = [4, 5, 6, 10, 11, 12];
+let arr3 = [];
+for (let i = 0; i < arr1.length; i++)
+    for (let k = 0; k < arr2.length; k++) {
+        if (i == k) {
+            arr3.push(arr1[i] + arr2[k])
+        }
+    }
+
+console.log(arr3)
+
+//========
+
+
+let addA = (size, value) => Array.apply(null, Array(size)).map(() => value
+);
+console.log(addA(3, 'a'));
+///====
+
+let union = array => new Set(array);
+console.log(union([7, 'z', 'z', 'z', 3, 7, 'z', 7, 'z', 3, 5, 9, 7], [7, 'z', 7, 'z', 3, 5, 9, 7], 7, 'z', 7, 'z', 3, 5, 9, 7))
