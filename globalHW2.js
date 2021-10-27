@@ -68,3 +68,15 @@ console.log(addA(3, 'a'));
 
 let union = array => new Set(array);
 console.log(union([7, 'z', 'z', 'z', 3, 7, 'z', 7, 'z', 3, 5, 9, 7], [7, 'z', 7, 'z', 3, 5, 9, 7], 7, 'z', 7, 'z', 3, 5, 9, 7))
+
+//====
+
+let moveArr = (arr4, from, to) => {
+    arr4.splice(to, 0, arr4.splice(from, 1)[0])
+    return arr4
+};
+
+console.log(moveArr([152, 56562, 443], 0, 1))
+console.log(moveArr(['fg', 'hf', 154, true, 'a', 'g', 'po', 'po154'], 5, 1))
+
+//========
