@@ -80,3 +80,67 @@ console.log(moveArr([152, 56562, 443], 0, 1))
 console.log(moveArr(['fg', 'hf', 154, true, 'a', 'g', 'po', 'po154'], 5, 1))
 
 //========
+
+let Xobj = (obj1, obj2) =>
+    Object.keys(obj1).filter(itm => itm in obj2);
+
+console.log(Xobj({ a: 1, b: 2 }, { c: 1, b: 2 }))
+
+//===========
+
+let years = (year1, year2) => {
+    let arrYear = [];
+    for (let i = year1; i <= year2; i++) {
+        if ((i % 4 == 0 && i % 100 !== 0) || (i % 100 == 0 && i % 400 == 0))
+            arrYear.push(i);
+    };
+    return arrYear;
+};
+
+console.log(years(1880, 2050))
+
+
+//======
+let stR = 'JavaScript';
+
+function char(item, index, str) {
+    return str.slice(index - 1, index + 2)
+};
+
+let modStr = Array.from(stR).map.call(stR, char);
+console.log(modStr)
+
+//=====
+
+/* let enterNum = prompt('Enter the number', 5555);
+let num = (enterNum) => {
+    Array.from(enterNum).map(() => {
+        console.log(enterNum)
+        for (i = 1; i < enterNum.length; i++);
+        if ((enterNum[i - 1] % 2 !== 0) && (enterNum[i] % 2 == 0)) {
+            return (`${enterNum[i - 1]}:${enterNum[i]} `)
+        }
+        else {
+            return (`${enterNum[i - 1]}${enterNum[i]} `)
+        }
+    })
+    return enterNum.join('');
+}
+
+console.log(num()) */
+
+let enterNum = prompt('Enter the number', 5555);
+let numEnter = (enterNum) => {
+    let num = [enterNum[0]]
+    for (i = 1; i < enterNum.length; i++) {
+        if ((enterNum[i - 1] % 2 !== 0) && (enterNum[i] % 2 !== 0)) {
+            num.push(':', enterNum[i]);
+        }
+        else {
+            num.push(enterNum[i]);
+        }
+    }
+    return num.join('');
+}
+
+console.log(numEnter(enterNum))
