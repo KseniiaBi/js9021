@@ -11,11 +11,279 @@
 
 <script>
 
-	let word = 'ain';
-	let reg = new RegExp(word,'gi');
-	let str = 'Rain again';
 
-	console.log(str.match(reg));
+//  ООП
+
+
+let animal = {
+	eat: true,
+	walk(){
+		console.log('is walking');
+	}
+}
+
+let cat = {
+	purr: true,
+	__proto__: animal
+}
+
+cat.walk();
+
+let sphynx = {
+	__proto__: cat,
+	hair: false
+}
+
+sphynx.walk();
+
+
+sphynx.eat; // true
+sphynx.purr; // true
+
+
+// иерархия всегда нисходящая, закольцевать ее нельзя
+
+
+for(let prop in sphynx){
+	if(sphynx.hasOwnProperty(prop)){
+		console.log(`${prop}: ${sphynx[prop]}`);
+	}
+}
+
+//  hasOwnProperty выводит здесь только те свойства, которые есть непосредственно внутри sphynx
+
+
+// functional OOP
+
+function Machine(name){
+	this.name = name;
+	this.enabled = false;
+
+	this.turnOnOff = function(){
+		this.enabled = !this.enabled;
+		console.log(`${this.name} enabled: ${this.enabled}`);
+	}
+}
+
+let fridge = new Machine('Samsung');
+fridge.turnOnOff();
+
+function CoffeeMachine(name, capacity){
+	Machine.apply(this, [name, capacity]);
+
+	this.isRunning = false;
+	this.capacity = capacity;
+	this._waterAmount = 0; // protected variable
+	const minWater = 50; // private variable
+
+	this.getWaterAmount = function(){
+		return this._waterAmount;
+	}
+
+	this.setWaterAmount = function(amount){
+		if(typeof(amount) != 'number'){
+			// throw new Error('Please use only water'); // исключения такого вида останавливают работу приложения
+			console.error('Please use only water');
+			return;
+		}
+		else if(this._waterAmount + amount > capacity){
+			console.error('Too much water!');
+		}
+		else if(amount < 0){
+			console.error(`Can not remove water from ${this.name}`);
+		}
+		else{
+			this._waterAmount += amount;
+		}
+	}
+
+	let parentturnOnOff  = this.turnOnOff;
+
+	this.turnOnOff = function(){
+		if(!this.isRunning){
+			parentturnOnOff.call(this);
+		}
+		else{
+			setTimeout(() => {
+				parentturnOnOff.call(this);
+			}, 1000);
+		}
+		
+	}
+
+	this.makeCoffee = function(){
+		if(this.enabled){
+			if(this._waterAmount < minWater){
+				console.error('Please add water');
+				return;
+			}
+			this.isRunning = true;
+			setTimeout(() => {
+				console.log('Coffee is ready');
+				this.isRunning = false;
+			}, 1000);
+		}	
+	}
+}
+
+
+let saeco = new CoffeeMachine('Saeco', 1000);
+saeco.turnOnOff();
+
+console.log(saeco.getWaterAmount());
+saeco.setWaterAmount('121212');
+saeco.setWaterAmount(1550);
+console.log(saeco.getWaterAmount());
+saeco.setWaterAmount(150);
+console.log(saeco.getWaterAmount());
+saeco.setWaterAmount(350);
+console.log(saeco.getWaterAmount());
+saeco.setWaterAmount(-350);
+console.log(saeco.getWaterAmount());
+
+
+saeco.makeCoffee();
+saeco.turnOnOff();
+
+
+let coffeemaker = new CoffeeMachine('Gaggia class D', 1500);
+coffeemaker.turnOnOff();
+coffeemaker.setWaterAmount(-350);
+coffeemaker.makeCoffee();
+coffeemaker.turnOnOff();
+
+
+
+// Prototype OOP
+
+function Car(name, energy, type, year){
+	this.name = name;
+	this.type = type;
+	this.year = year;
+	this.energy = energy;
+
+	this._isReady = false;
+	this._fuelAmount = 0;
+}
+
+Car.prototype.sell = function(){
+	console.warn(`Продам ${this.type} ${this.name} ${this.year} года выпуска, ${this.energy}. Не бит, не крашен :) `);
+}
+
+Car.prototype.drive = function(){
+	if(!this._isReady){
+		switch(this.energy){
+			case 'petrol': console.log('95th, please ');
+							break;
+			case 'gas': console.log('Газ до полного');
+							break;
+			case 'diesel': console.log('Pullse to max');
+							break;
+			case 'electro': console.log('⚡️⚡️⚡️🔌');
+							break;
+			default: console.log('Лей все, что есть');
+							break;
+		}
+	}
+	else{
+		console.log('50km/h');
+	}
+}
+
+// одновременно и геттер, и сеттер
+Car.prototype.fuel = function(){
+	if(arguments.length == 0){
+		console.log(` ${this._fuelAmount}%`);
+	}
+	else{
+
+		if(arguments[0] < 0 && arguments[0] + this._fuelAmount > 100){
+			console.error('Заправка отменена');
+		}
+		else{
+			this._isReady = true;
+			this._fuelAmount += arguments[0];
+		}
+	}
+}
+
+
+let tesla = new Car('Tesla Model X', 'electro', 'crossover', 2021);
+
+tesla.drive();
+tesla.fuel(50);
+tesla.fuel();
+tesla.drive();
+tesla.sell();
+
+
+// ООП на классах
+
+class Drink{
+	constructor(name, vol){
+		this.name = name;
+		this.volume = vol;
+	}
+
+	getReady(){
+		setTimeout(() => {
+			console.log(`${this.name}, ${this.volume} is ready. Enjoy!`);
+		}, 2000);
+	}
+}
+
+class Coffee extends Drink{
+	static barista = 'Black Jack'; // статическое свойство указывается за пределами конструктора
+	static coffecups = 0;
+
+	constructor(name, vol) {
+		super(name, vol);
+		Coffee.countCoffee();
+	}
+		// #coffeine = 20; // Uncaught SyntaxError: Private field '#coffeine' must be declared in an enclosing class
+	orderToGo(){
+		console.warn('Drink was ordered to go');
+		super.getReady();
+	}
+
+	static countCoffee(){
+		Coffee.coffecups += 1;
+	}
+}
+
+let latte = new Coffee('Latte', 220);
+let cap = new Coffee('Cappuchino', 180);
+let esp = new Coffee('Espresso', 30);
+	// console.log(latte.#coffeine); //Uncaught SyntaxError: Private field '#coffeine' must be declared in an enclosing class
+latte.orderToGo();
+
+// typeof(Coffee) = function
+
+console.log(Coffee.barista); 
+console.log(Coffee.coffecups); 
+
+console.log(tesla instanceof(Car)); // true
+
+
+// Singleton Pattern 
+
+class Universe{
+	static count = 0;
+
+	constructor(name){
+		if(Universe.count == 1){
+			return;
+		}
+		else{
+			this.name = name;
+			Universe.count += 1;
+		}
+		
+	}
+}
+
+let existing = new Universe('all');
+let u2 = new Universe('u2');
 
 
 </script>
