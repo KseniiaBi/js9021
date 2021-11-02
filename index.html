@@ -9,7 +9,56 @@
 
 
 
-<script type="module" src="common.js"></script>
+<script>
+	
+
+	
+
+	// function deleteItem(y,n){
+	// 	confirm('Delete item?') ? y() : n();
+	// }
+
+	// function proceed(){
+	// 	console.warn('Item was deleted');
+	// }
+	// function decline(){
+	// 	console.error('Item was not deleted');
+	// }
+
+	// deleteItem(proceed, decline);
+
+
+// создающий код
+	let promise = new Promise((resolve, reject) => {
+		confirm('Delete item?') ? resolve('Deleted') : reject('declined');
+	});
+// потребляющий код
+	promise.then(function(result){console.warn(result)},
+				 function(error){ console.error(error);}
+	);
+
+
+async function sum(a,b){
+	return a+b;
+}
+
+sum(2,3).then((res)=>console.log(res));
+
+async function sayHi(name){
+	let promise = new Promise((resolve, reject) => {
+		setTimeout(()=> resolve('good evening'), 1000);
+	});
+
+	let phrase = await promise + ', ' + name;
+	console.log(phrase);
+}
+
+sayHi('Marta');
+
+
+
+
+</script>
 
 </body>
 </html>
