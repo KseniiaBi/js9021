@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+</head>
+<body>
+
+
+
+<script>
+
+// 1) в функциональном стиле описать классы Animal & Cat (можно другие по желанию)
+
+class Animal {
+
+	constructor(name){
+		this.name=name;
+		this.paw=true;
+		this.tail=true;
+	}
+}
+
+ 
+class Cats extends Animal {
+	constructor (name, isPredator){
+		super (name)
+		this.isPredator = true;
+       }
+}
+	
+
+let tiger = new Cats ("Бонифаций");
+let lion = new Cats ("Муфаса");
+
+console.log(tiger)
+console.log(lion)
+
+
+class Horses extends Animal {
+	constructor(name, isPredator){
+	super (name)
+	this.isPredator = false;
+       }
+}
+
+let horse = new Horses ("Идальго", this.isPredator);
+
+
+console.log(horse)
+
+
+</script>
+
+
+</body>
+</html>

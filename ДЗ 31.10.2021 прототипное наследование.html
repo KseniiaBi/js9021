@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+</head>
+<body>
+
+
+
+<script>
+
+// 2) в прототипном стиле описать классы Animal & Cat (можно другие по желанию)
+
+let animal = {
+  tail: true,
+  ears: true,
+  nose: true
+};
+let bat = {
+  wings: true
+};
+
+bat.__proto__ = animal;
+
+console.log (bat.tail, bat.ears, bat.nose, bat.wings);
+
+
+
+</script>
+
+
+</body>
+</html>
