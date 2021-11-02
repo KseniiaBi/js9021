@@ -56,7 +56,22 @@ async function sayHi(name){
 sayHi('Marta');
 
 
+let data = {
+	"name": "Ann",
+	"age": 22
+}
 
+// console.log(JSON.parse(data));
+
+let obj = {
+	name: 'm',
+	lastname: 'd'
+}
+
+obj = JSON.stringify(obj);
+console.log(obj);
+obj = JSON.parse(obj);
+console.log(obj);
 
 </script>
 
