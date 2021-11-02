@@ -9,37 +9,7 @@
 
 
 
-<script>
-
-
-let memo = [];
-function sumRange(start, end){
-
-	let res = 0;
-	let lastEnd = 0;
-
-	memo.forEach(item => {
-		if(item.start == start && item.end <= end){
-			res = item.res;
-			lastEnd = item.end;
-		}
-	});
-
-// и дальше досчитываем остаток 
-
-	for(let i = start; i <= (end - lastEnd); i++){
-		res += i;
-	}
-	memo.push({
-		start: start,
-		end: end,
-		res: res
-	});
-	console.log(res);
-}
-
-
-</script>
+<script type="module" src="common.js"></script>
 
 </body>
 </html>
