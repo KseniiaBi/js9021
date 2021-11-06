@@ -7,71 +7,61 @@
 </head>
 <body>
 
+	<header style="height: 1200px">ggg</header>
+
+
+	<div id="box">box</div>
+	<div class="content">content</div>
+	<button onclick='alert(111)'>click me!</button>
+	<section>section 1</section>
+	<section>section 2</section>
+
 
 
 <script>
+
+	const box = document.getElementById('box');
+	const content = document.getElementsByClassName('content')[0]; // HTMLCollection if without []
+	const btn = document.getElementsByTagName('button')[0];// HTMLCollection if without []
+	const sec1 = document.querySelector('section'); // any valid CSS selector - #box, .content, li.active etc
+	const sections = document.querySelectorAll('section'); // Node List
+	const sec2 = document.querySelectorAll('section')[1];
+
+
+	btn.onclick = function(){
+		console.log(222);
+	}
+
+	function foo(a,b){
+		console.warn('212121212!!!');
+		return a+b;
+	}
+
+	box.onclick = () => foo(2,3);
+
+	// document.oncontextmenu = function(){
+	// 	alert('Don`t copy content!');
+	// 	return false;
+	// } // запрет использования правой кнопки мыши
 	
 
-	
-
-	// function deleteItem(y,n){
-	// 	confirm('Delete item?') ? y() : n();
-	// }
-
-	// function proceed(){
-	// 	console.warn('Item was deleted');
-	// }
-	// function decline(){
-	// 	console.error('Item was not deleted');
-	// }
-
-	// deleteItem(proceed, decline);
-
-
-// создающий код
-	let promise = new Promise((resolve, reject) => {
-		confirm('Delete item?') ? resolve('Deleted') : reject('declined');
-	});
-// потребляющий код
-	promise.then(function(result){console.warn(result)},
-				 function(error){ console.error(error);}
-	);
-
-
-async function sum(a,b){
-	return a+b;
-}
-
-sum(2,3).then((res)=>console.log(res));
-
-async function sayHi(name){
-	let promise = new Promise((resolve, reject) => {
-		setTimeout(()=> resolve('good evening'), 1000);
+	document.addEventListener('click', function(event){
+		console.log(event);
 	});
 
-	let phrase = await promise + ', ' + name;
-	console.log(phrase);
-}
-
-sayHi('Marta');
+	function handleScroll(){
+		console.log('scroll!');
+	}
 
 
-let data = {
-	"name": "Ann",
-	"age": 22
-}
+	document.addEventListener('scroll', handleScroll);
 
-// console.log(JSON.parse(data));
+	sec1.onclick= ()=> document.removeEventListener('scroll', handleScroll);
 
-let obj = {
-	name: 'm',
-	lastname: 'd'
-}
+	sec2.onclick= ()=> document.addEventListener('scroll', handleScroll);
 
-obj = JSON.stringify(obj);
-console.log(obj);
-obj = JSON.parse(obj);
-console.log(obj);
+
+
 
 </script>
 
