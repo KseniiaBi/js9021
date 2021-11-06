@@ -4,64 +4,81 @@
 	<title>JS FE</title> 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+
+	<style>
+		nav{
+			display: none;
+		}
+		.opened nav{
+			display: block;
+		}
+		.opened .btn{
+			background: red;
+		}
+
+		.paint{
+			height: 200px;
+			width: 400px;
+			border: 1px solid #e2e2e2;
+		}
+	</style>
 </head>
 <body>
 
-	<header style="height: 1200px">ggg</header>
+	<header>
+		<div class="btn">🟢</div>
+
+		<nav>
+			<a href="#">Home</a>
+			<a href="#">About</a>
+			<a href="#">Contact</a>
+		</nav>
+	</header>
 
 
-	<div id="box">box</div>
-	<div class="content">content</div>
-	<button onclick='alert(111)'>click me!</button>
-	<section>section 1</section>
-	<section>section 2</section>
+	<input type="number" id="inp">
+	<button>*2</button>
+	<output id="out"></output>
 
+	<section class="paint"></section>
+	<button id="b2">paint!</button>
 
 
 <script>
+// pseudo calc
+	const input = document.getElementById('inp');
+	const btn = document.getElementsByTagName('button')[0];
+	const output = document.querySelector('#out');
 
-	const box = document.getElementById('box');
-	const content = document.getElementsByClassName('content')[0]; // HTMLCollection if without []
-	const btn = document.getElementsByTagName('button')[0];// HTMLCollection if without []
-	const sec1 = document.querySelector('section'); // any valid CSS selector - #box, .content, li.active etc
-	const sections = document.querySelectorAll('section'); // Node List
-	const sec2 = document.querySelectorAll('section')[1];
+	btn.onclick = () => output.value = Number(input.value) * 2;
+
+	// innerText - text inside p, div, article... but inside inputs lives value
 
 
-	btn.onclick = function(){
-		console.log(222);
+// burger menu
+	const header = document.querySelector('header');
+	const menubtn = document.querySelector('.btn');
+
+	menubtn.onclick = () => header.classList.toggle('opened');
+
+
+
+// paint
+let canva = document.getElementsByClassName('paint')[0];
+let btnPainter = document.getElementById('b2');
+let colors = ['tomato', 'lightgreen', 'hotpink', 'turqoise', 'lightblue', 'gold'];
+
+function painter() {
+	let count = 0;
+
+	return function(){
+		canva.style.background = colors[count];
+		count = count < colors.length -1 ? ++count : 0;
 	}
+}
 
-	function foo(a,b){
-		console.warn('212121212!!!');
-		return a+b;
-	}
-
-	box.onclick = () => foo(2,3);
-
-	// document.oncontextmenu = function(){
-	// 	alert('Don`t copy content!');
-	// 	return false;
-	// } // запрет использования правой кнопки мыши
-	
-
-	document.addEventListener('click', function(event){
-		console.log(event);
-	});
-
-	function handleScroll(){
-		console.log('scroll!');
-	}
-
-
-	document.addEventListener('scroll', handleScroll);
-
-	sec1.onclick= ()=> document.removeEventListener('scroll', handleScroll);
-
-	sec2.onclick= ()=> document.addEventListener('scroll', handleScroll);
-
-
-
+let p = painter();
+btnPainter.onclick = p;
 
 </script>
 
