@@ -6,79 +6,162 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1"> 
 
 	<style>
-		nav{
-			display: none;
-		}
-		.opened nav{
-			display: block;
-		}
-		.opened .btn{
-			background: red;
+
+		.slider{
+			height: 300px;
+			position: relative;
 		}
 
-		.paint{
-			height: 200px;
-			width: 400px;
-			border: 1px solid #e2e2e2;
+		.slide{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			text-align: center;
+			font-size: 100px;
+			color: #fff;
+			background: lightgray;
+			opacity: 0;
+			transition: opacity 0.5s linear;
 		}
+
+		.slide:nth-of-type(2){
+			background: lightgreen;
+		}
+		.slide:nth-of-type(3){
+			background: hotpink;
+		}
+		.slide:nth-of-type(4){
+			background: lightblue;
+		}
+		.slide:nth-of-type(5){
+			background: limegreen;
+		}
+
+		.slide.active{
+			opacity: 1;
+		}
+
+		.navs{
+			position: absolute;
+			bottom: 20px;
+			display: flex;
+			justify-content: center;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			cursor: pointer;
+		}
+
+		.nav{
+			list-style: none;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			border: 2px solid #fff;
+			margin-right: 15px;
+		}
+
+		.nav.active{
+			background: #fff;
+		}
+
+		#arr_prev, #arr_next{
+			position: absolute;
+			top: 100px;
+			font-size: 100px;
+			transform: scaleX(0.5);
+			left: 0;
+			z-index: 10;
+			color: #fff;
+			cursor: pointer;
+		}
+
+		#arr_next{
+			left: auto;
+			right: 0;
+		}
+		
+
 	</style>
+	
 </head>
 <body>
 
-	<header>
-		<div class="btn">🟢</div>
+	<div class="slider">
+		<div class="slide active">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide">Slide 5</div>
 
-		<nav>
-			<a href="#">Home</a>
-			<a href="#">About</a>
-			<a href="#">Contact</a>
-		</nav>
-	</header>
+		<ul class="navs">
+			<li data-slide="0" class="nav active"></li>
+			<li data-slide="1" class="nav"></li>
+			<li data-slide="2" class="nav"></li>
+			<li data-slide="3" class="nav"></li>
+			<li data-slide="4" class="nav"></li>
+		</ul>
 
-
-	<input type="number" id="inp">
-	<button>*2</button>
-	<output id="out"></output>
-
-	<section class="paint"></section>
-	<button id="b2">paint!</button>
+		<div id="arr_prev">&lt;</div>
+		<div id="arr_next">&gt;</div>
+	</div>
 
 
 <script>
-// pseudo calc
-	const input = document.getElementById('inp');
-	const btn = document.getElementsByTagName('button')[0];
-	const output = document.querySelector('#out');
 
-	btn.onclick = () => output.value = Number(input.value) * 2;
+	let slides = document.querySelectorAll('.slide');
+	let navs = document.querySelectorAll('.nav');
+	navs = [].slice.call(navs);
+	let prev = document.getElementById('arr_prev');
+	let next = document.getElementById('arr_next');
+	let currentSlide = 0;
 
-	// innerText - text inside p, div, article... but inside inputs lives value
+	navs.forEach(item => {
+		let itemNum = +item.dataset.slide;
+		item.onclick = () => {
+			currentSlide = itemNum;
+			changeSlide(itemNum);
+		}
+	});
 
-
-// burger menu
-	const header = document.querySelector('header');
-	const menubtn = document.querySelector('.btn');
-
-	menubtn.onclick = () => header.classList.toggle('opened');
-
-
-
-// paint
-let canva = document.getElementsByClassName('paint')[0];
-let btnPainter = document.getElementById('b2');
-let colors = ['tomato', 'lightgreen', 'hotpink', 'turqoise', 'lightblue', 'gold'];
-
-function painter() {
-	let count = 0;
-
-	return function(){
-		canva.style.background = colors[count];
-		count = count < colors.length -1 ? ++count : 0;
+	let interval;
+// autoplay
+	function init(){
+		interval = setInterval(function(){
+			currentSlide = currentSlide<slides.length-1 ? ++currentSlide : 0;
+			changeSlide(currentSlide);
+		},3000);
 	}
-}
+	// initialize autoplay once
+	init();
 
-let p = painter();
-btnPainter.onclick = p;
+// change slide from everywhere
+	function changeSlide(num){
+		for(let i = 0; i < slides.length; i++){
+			slides[i].classList.remove('active');
+			navs[i].classList.remove('active');
+		}
+		slides[num].classList.add('active');
+		navs[num].classList.add('active');
+
+		// re-initialize autoplay 
+		clearInterval(interval);
+		init();
+	}
+// arrows
+	prev.onclick = ()=>{
+		currentSlide = currentSlide> 0 ? --currentSlide : slides.length-1;
+		changeSlide(currentSlide);
+	}
+
+	next.onclick = ()=>{
+		currentSlide = currentSlide<slides.length-1 ? ++currentSlide : 0;
+		changeSlide(currentSlide);
+	}
+
+
 
 </script>
 
