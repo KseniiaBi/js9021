@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Сalculator</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no,maximum-scale=1.0,minimum-scale=1.0"> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet">
+	<style>
+		*{
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;		
+		}
+		body{
+			font-family: Roboto;
+			margin: 25px;
+		}
+		.calculator{
+			padding: 20px;
+			color: white;
+			background-color: black;
+			width: 563px;
+			height: 1218px;	
+			border-radius: 50px;
+		}
+		.top-container{
+			height: 270px;
+			width: 100%;
+		}
+		.display{
+			font-size: 130px;
+			font-weight: 300;
+			margin-bottom: 20px;
+			height: 158px;
+			text-align: right;
+			margin-right: 20px;
+		}
+		.buttons-container{
+			display: grid;
+			grid-template-rows: repeat(5, 1fr);
+			grid-template-columns: repeat(4, 1fr);;
+			grid-gap: 20px;
+		}
+		.button{
+			cursor: pointer;
+			height: 110px;
+			width: 110px;
+			font-size: 45px;
+			border-radius: 50%;
+			background: #333;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: filter 0.3s;
+		}
+		.button.function{
+			background: gray;
+			color: black;
+		}
+		.button.operator{
+			background: orange;
+		}
+		.button.number-0{
+			width: 250px;
+			border-radius: 55px;
+			justify-content: left;
+			padding-left: 43px;
+			grid-column: 1/span 2;
+		}
+		.button:active,
+		.button:focus{
+			filter: brightness(120%);
+		}
+	</style>
+	
+</head>
+<body>
+<div class="calculator">
+	<div class="top-container"></div>
+	<div class="display">0</div>
+	<div class="buttons-container">
+		<div class="button function AC">AC</div>
+		<div class="button function Modul">±</div>
+		<div class="button function Preccent">%</div>
+		<div class="button operator division">/</div>
+		<div class="button number">7</div>
+		<div class="button number">8</div>
+		<div class="button number">9</div>
+		<div class="button operator multiplication">x</div>
+		<div class="button number">4</div>
+		<div class="button number">5</div>
+		<div class="button number">6</div>
+		<div class="button operator subtracion">-</div>
+		<div class="button number">1</div>
+		<div class="button number">2</div>
+		<div class="button number">3</div>
+		<div class="button operator adition">+</div>
+		<div class="button number-0">0</div>
+		<div class="button decimal">.</div>
+		<div class="button operator equal">=</div>
+	</div>
+</div>
+
+
+<script>
+let znack = 0;
+let num = 0;
+let mid=0;
+let res= document.querySelector(`.display`);
+let ac = document.querySelector(`.AC`);
+let module = document.querySelector(`.Modul`);
+let proccent = document.querySelector(`.Preccent`);
+let zero = document.querySelector(`.number-0`);
+let decimal = document.querySelector(`.decimal`);
+let butms = document.querySelectorAll(`.number`);
+let fun = document.querySelectorAll(`.operator`);
+ac.onclick=()=>{res.innerText=0}
+module.onclick= () => { res.innerText=-(res.innerText)}
+zero.onclick=()=>{ 
+	if (res.innerText.startsWith(`0.`)){res.innerText+=zero.innerHTML}
+	else if (res.innerText.startsWith(`0`)){res.innerText=res.innerText;}
+	else res.innerText+=zero.innerHTML
+}
+decimal.onclick=()=>{
+	res.innerText.includes(`.`)? res.innerText=res.innerText: res.innerText+=`.`;
+}
+proccent.onclick=()=>{res.innerText/=100;}
+for (let i=0;i<butms.length;i++){
+	butms[i].onclick=()=>{
+		if (res.innerText==0){res.innerText=butms[i].innerHTML}
+		else res.innerText+=butms[i].innerHTML
+	};
+}
+for (let i=0;i<fun.length;i++){
+	fun[i].onclick=()=>{
+		if (fun[i].innerHTML!=`=`) {znack=fun[i].innerHTML; num=+res.innerText; res.innerText=0;}	
+		else {
+			if (num!=`0`){
+				mid=+res.innerText;
+				switch(znack){
+					case `/`:
+						res.innerText=num/mid;
+						break;
+					case `x`:
+						res.innerText=num*mid;
+						break;
+					case `-`:
+						res.innerText=num-mid;
+						break;
+					case `+`:
+						res.innerText=num+mid;
+						break;
+				}
+				znack = 0;
+				num = 0;
+			 }
+			else {znack=0;num = 0;}
+		}
+	}
+}
+</script>
+
+</body>
+</html>
