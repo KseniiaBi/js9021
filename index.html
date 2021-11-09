@@ -224,6 +224,54 @@
 
 
 
+	// OOP pattern Factory
+
+	class Car{
+		constructor(name,year ){
+			this.year = year;
+			this.name = name;
+			this.type = 'car';
+		}
+	}
+
+	class Motorcycle{
+		constructor(name,year ){
+			this.year = year;
+			this.name = name;
+			this.type = 'moto';
+		}
+	}
+
+	class Bike{
+		constructor(name,year ){
+			this.year = year;
+			this.name = name;
+			this.type = 'bike';
+		}
+	}
+
+	class VehicleFactory{
+		create(obj){
+			switch(obj.type){
+				case 'car': return new Car(obj.name, obj.year);
+							break;
+				case 'moto': return new Motorcycle(obj.name, obj.year);
+							break;
+				case 'bike': return new Bike(obj.name, obj.year);
+							break;
+				default: return new Car(obj.name, obj.year);
+							break;
+			}
+		}
+	}
+
+
+	let vf = new VehicleFactory();
+	let veh1 = vf.create({type: 'car', year: 2020, name: 'vehicle'});
+	let veh2 = vf.create({type: 'bike', year: 2019, name: 'vehicle'});
+	let veh3 = vf.create({type: 'moto', year: 2011, name: 'vehicle'});
+
+
 </script>
 
 </body>
