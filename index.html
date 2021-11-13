@@ -7,7 +7,53 @@
 
 	<style>
 
-	
+		*{
+			box-sizing: border-box;
+		}
+
+		input{
+			height: 44px;
+			padding: 10px;
+		}
+
+		input[type=submit]{
+			outline: none;
+			border: none;
+			color: #fff;
+			text-transform: uppercase;
+			background: hotpink;
+		}
+
+		li{
+			cursor: pointer;
+			font-size: 20px;
+		}
+
+		.done{
+			text-decoration: line-through;
+		}
+
+		.del, .edit{
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			margin-left: 16px;
+			cursor: pointer;
+		}
+
+		.del{
+			background: url('delete.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.edit{
+			background: url('edit.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.hidden{
+			display: none;
+		}
 
 
 	</style>
@@ -15,13 +61,171 @@
 </head>
 <body>
 
-	<a href="contact.html#tab1">contact tab1</a>
-	<a href="contact.html#tab2">contact map</a>
-	<a href="contact.html#tab3">contact tab3</a>
+	<form id="todoform">
+		<input type="text" id="todoinp" placeholder="Type your task">
+		<input type="submit" value="Save">
+	</form>
 
+	<h3>Any tasks yet, type your first todo above</h3>
+
+	<ol class="todolist"></ol>
+
+	<button id="clearall">Clear All</button>
 
 
 <script>
+
+	// markup to do list +
+	// save task +
+	// mark as done + 
+	// delete task + 
+	// edit task +
+	// save to browser storage + 
+	// clear all list + 
+
+	const form = document.querySelector('#todoform');
+	const input = document.querySelector('#todoinp');
+	const heading = document.querySelector('h3');
+	const todolist = document.querySelector('.todolist');
+	const clearBtn = document.querySelector('#clearall');
+
+	let storage = localStorage;
+	const APP_NAME = 'ToDoList';
+	let todos;
+
+	if(storage.getItem(APP_NAME) == null || storage.getItem(APP_NAME).length < 1){
+		todos = [];
+	}
+	else{
+		todos = JSON.parse(storage.getItem(APP_NAME));
+		todos.forEach(item => createLi(item.task, item.id));
+	}
+
+	function saveToLS(){
+		storage.setItem(APP_NAME, JSON.stringify(todos))
+	}
+
+	clearBtn.onclick =() => {
+		todos.forEach((item, index) => todos.splice(index,1));
+		todolist.innerHTML = '';
+		storage.removeItem(APP_NAME);
+		checkTodos();
+	}
+
+	function checkTodos(){
+		if(todos.length == 0){
+			heading.style.display = 'block';
+			todolist.style.display = 'none';
+			clearBtn.style.display = 'none';
+		}
+		else{
+			heading.style.display = 'none';
+			todolist.style.display = 'block';
+			clearBtn.style.display = 'block';
+		}
+	}
+
+	checkTodos();
+
+	form.onsubmit = (e) => {
+		e.preventDefault();
+		saveTask();
+	}
+
+	function saveTask(){
+		let todo = input.value;
+		if(todo.length > 0){
+			let id = Date.now();
+			todos.push({
+				task: todo,
+				id: id
+			});
+
+			createLi(todo, id);
+
+			input.value = '';
+			if(todos.length == 1){
+				checkTodos();
+			}
+			saveToLS();
+		}
+	}
+
+	function createLi(todotext, todoid){
+		let li = document.createElement('li');
+		li.id = todoid;
+
+		li.append(createEl('span', todotext, []));
+		li.append(createEl('input', '', ['hidden']));
+		li.append(createEl('span', '', ['del']));
+		li.append(createEl('span', '', ['edit']));
+
+		todolist.append(li);
+	}
+
+	function createEl(tag, text, classlist){
+		let el = document.createElement(tag);
+		el.innerText = text;
+		classlist.forEach((item)=>el.classList.add(item));
+		return el;
+	}
+
+	function deleteTask(id){
+		todos.forEach((item, index) => {
+			if(item.id == id){
+				todos.splice(index, 1);
+			}
+		});
+
+		if(todos.length == 0){
+			checkTodos();
+		}
+		saveToLS();
+	}
+
+	function editTask(id){
+		let el = document.getElementById(`${id}`);
+		let span = el.querySelector('span');
+		let inp = el.querySelector('input');
+
+		span.classList.add('hidden');
+		inp.classList.remove('hidden');
+
+		inp.value = span.innerText;
+
+		inp.onkeyup = (event) =>{
+			if(event.keyCode == 13){
+				span.innerText = inp.value;
+				inp.classList.add('hidden');
+				span.classList.remove('hidden');
+
+				todos.forEach((item, index) => {
+					if(item.id == id){
+						item.task = inp.value;
+					}
+				});
+
+				saveToLS();
+				inp.onkeyup = null; // отписаться от слушателя
+			}
+		}
+	}
+
+
+	document.addEventListener('click', function(event){
+		if(event.target.parentNode.tagName.toLowerCase() == 'li'){
+			event.target.parentNode.classList.toggle('done');
+		}
+		if(event.target.classList.contains('del')){
+			let id = event.target.parentNode.id;
+			event.target.parentNode.remove();
+			deleteTask(id);
+		}
+		if(event.target.classList.contains('edit')){
+			let id = event.target.parentNode.id;
+			editTask(id);
+		}
+	});
 
 
 

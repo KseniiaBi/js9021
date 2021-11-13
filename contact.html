@@ -7,125 +7,89 @@
 
 	<style>
 
-		.tab_names{
+		body{
+			width: 100%;
+			overflow-x: hidden;
+		}
+
+		.menu{
 			display: flex;
-			align-items: flex-start;
-			margin-bottom: 20px;
-		}
-
-		.tabname{
+			width: auto;
+			/*overflow-x: scroll;*/
+			overflow-y: visible;
 			font-size: 20px;
-			margin-right: 40px;
-			padding-bottom: 16px;
+			padding-bottom: 30px;
+			
+		}
+		nav{
 			position: relative;
-			text-transform: uppercase;
 		}
 
-		.tabname:hover, .tabname.active{
-			color: limegreen;
+		nav a{
+			flex: 0 0 auto;
+			margin-right: 20px;
 		}
-		.tabname::after, .tabname::after{
-			content: '';
-			display: block;
+
+		.submenu{
 			position: absolute;
-			bottom: 0;
+			top: 40px;
 			left: 0;
-			height: 2px;
-			background: limegreen;
-			width: 0%;
-			transition: width 0.4s linear;
+			width: 200px;
+			background: gold;
+			height: 300px;
 		}
-		.tabname:hover::after, .tabname.active::after{
-			width: 100%;
-		}
-
-		.tab{
-			max-width: 600px;
-			width: 100%;
-			border: 1px solid limegreen;
-			padding: 20px;
-			display: none;
-		}
-		.tab.active{
-			display: block;
-		}
-
 
 	</style>
 	
 </head>
 <body>
 
-	
-	<div class="tabs">
-		<div class="tab_names">
-			<div data-id='tab1' class="tabname active">contacts</div>
-			<div data-id='tab2' class="tabname">map</div>
-			<div data-id='tab3' class="tabname">Another</div>
-		</div>
-
-		<div class="tab_content">
-			<div id="tab1" class="tab active">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				<ul>
-					<li><a href="tel:+32349489340">+32349489340</a></li>
-					<li>+32847348392</li>
-					<li><a href="mailto:orders@mysite.com">orders@mysite.com</a></li>
-				</ul>
+	<header>
+		
+		<nav>
+			<div class="menu">		
+				<a href="#">Link 1</a>
+				<div class="submenu"></div>
+				<a href="#">Link 2</a>
+				<a href="#">Link 3</a>
+				<a href="#">Link 4</a>
+				<a href="#">Link 5</a>
+				<a href="#">Link 6</a>
+				<a href="#">Link 7</a>
 			</div>
-			<div id="tab2" class="tab">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1528.8399455134395!2d36.23775006798078!3d49.99454368164148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4127a0efb00d7d89%3A0xe891d820563b7e84!2zU09VUkNFIGlUIC0gaVQg0LrRg9GA0YHRiyDQsiDQpdCw0YDRjNC60L7QstC1!5e0!3m2!1sen!2sua!4v1636483192576!5m2!1sen!2sua" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-			</div>
-			<div id="tab3" class="tab">
-				<h2>fdkjhdfisghfsd</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			</div>
-		</div>
-	</div>
+		</nav>
+	</header>
 
 
 
 <script>
 
-	const tabbtns = document.querySelectorAll('.tabname');
-	const tabs = document.querySelectorAll('.tab');
+	let nav = document.querySelector('nav');
+	let scrollnav =  document.querySelector('.menu');
 
-	let hash = window.location.hash;
-	
-	if(hash.length > 0){
-		changeTab(hash.substr(1));
+	nav.onmousedown = function (event){
+		move(event.offsetX);
 	}
 
-	document.addEventListener('click', function(e){
-		if(e.target.classList.contains('tabname')){
-			let id = e.target.dataset.id;
-			changeTab(id);
-		}
-	});
+	function move(start){
+		let start_x = start;
 
-	function changeTab(h){
-		let tabbtn;
-		for(let i = 0; i < tabs.length; i++){
-			if(tabbtns[i].dataset.id == h){
-				tabbtn = tabbtns[i];
-			}
-			tabs[i].classList.remove('active');
-			tabbtns[i].classList.remove('active');
+		nav.onmouseup = function(event){
+			let end_x = event.offsetX;
+			let currentTransform = window.getComputedStyle(scrollnav).marginLeft;
+			currentTransform = +currentTransform.substr(0, currentTransform.length - 2);
+		
+			let delta_x = end_x - start_x;
+			let endTransform = currentTransform + delta_x;
+
+			scrollnav.style.marginLeft = `${endTransform}px`;
 		}
-		tabbtn.classList.add('active');
-		let tab = document.querySelector(`#${h}`);
-		tab.classList.add('active');
 	}
+
+
+
+
+
 
 
 </script>
