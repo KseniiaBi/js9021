@@ -8,226 +8,147 @@
 	<style>
 
 		*{
+			margin: 0;
+			padding: 0;
 			box-sizing: border-box;
 		}
-
-		input{
-			height: 44px;
-			padding: 10px;
+		.shop{
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			flex-flow: row wrap;
+			gap: 30px;
 		}
 
-		input[type=submit]{
-			outline: none;
-			border: none;
-			color: #fff;
-			text-transform: uppercase;
-			background: hotpink;
+		.item{
+			width: calc(50% - 30px);
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 		}
 
-		li{
-			cursor: pointer;
-			font-size: 20px;
+		.item img{
+			width: 100%;
+			height: 200px;
+			object-position: center;
+			object-fit: cover;
 		}
-
-		.done{
-			text-decoration: line-through;
-		}
-
-		.del, .edit{
-			display: inline-block;
-			width: 30px;
-			height: 30px;
-			margin-left: 16px;
-			cursor: pointer;
-		}
-
-		.del{
-			background: url('delete.png') no-repeat center;
-			background-size: contain;
-		}
-
-		.edit{
-			background: url('edit.png') no-repeat center;
-			background-size: contain;
-		}
-
-		.hidden{
-			display: none;
-		}
-
 
 	</style>
 	
 </head>
 <body>
 
-	<form id="todoform">
-		<input type="text" id="todoinp" placeholder="Type your task">
-		<input type="submit" value="Save">
-	</form>
+	<header>
+		<div class="cart">
+			<img width="30" src="carts.png">
+			<span class="cart_count">0 товаров,</span>
+			<span class="cart_total">0 uah</span>
+		</div>
 
-	<h3>Any tasks yet, type your first todo above</h3>
+		<select>
+			<option selected disabled>by default</option>
+			<option>by name</option>
+			<option>by price</option>
+		</select>
+	</header>
 
-	<ol class="todolist"></ol>
-
-	<button id="clearall">Clear All</button>
+	<div class="shop"></div>
 
 
 <script>
 
-	// markup to do list +
-	// save task +
-	// mark as done + 
-	// delete task + 
-	// edit task +
-	// save to browser storage + 
-	// clear all list + 
+	const URL = 'data.json';
+	let container = document.querySelector('.shop');
+	let data;
 
-	const form = document.querySelector('#todoform');
-	const input = document.querySelector('#todoinp');
-	const heading = document.querySelector('h3');
-	const todolist = document.querySelector('.todolist');
-	const clearBtn = document.querySelector('#clearall');
+	function getData(){
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', URL);
+		xhr.send();
 
-	let storage = localStorage;
-	const APP_NAME = 'ToDoList';
-	let todos;
-
-	if(storage.getItem(APP_NAME) == null || storage.getItem(APP_NAME).length < 1){
-		todos = [];
-	}
-	else{
-		todos = JSON.parse(storage.getItem(APP_NAME));
-		todos.forEach(item => createLi(item.task, item.id));
-	}
-
-	function saveToLS(){
-		storage.setItem(APP_NAME, JSON.stringify(todos))
-	}
-
-	clearBtn.onclick =() => {
-		todos.forEach((item, index) => todos.splice(index,1));
-		todolist.innerHTML = '';
-		storage.removeItem(APP_NAME);
-		checkTodos();
-	}
-
-	function checkTodos(){
-		if(todos.length == 0){
-			heading.style.display = 'block';
-			todolist.style.display = 'none';
-			clearBtn.style.display = 'none';
-		}
-		else{
-			heading.style.display = 'none';
-			todolist.style.display = 'block';
-			clearBtn.style.display = 'block';
-		}
-	}
-
-	checkTodos();
-
-	form.onsubmit = (e) => {
-		e.preventDefault();
-		saveTask();
-	}
-
-	function saveTask(){
-		let todo = input.value;
-		if(todo.length > 0){
-			let id = Date.now();
-			todos.push({
-				task: todo,
-				id: id
-			});
-
-			createLi(todo, id);
-
-			input.value = '';
-			if(todos.length == 1){
-				checkTodos();
+		xhr.onload = () => {
+			if(xhr.status == 200){
+				data = JSON.parse(xhr.response);
+				createShop(data);
 			}
-			saveToLS();
+			else{
+				console.error(xhr.statusText);
+			}
 		}
 	}
 
-	function createLi(todotext, todoid){
-		let li = document.createElement('li');
-		li.id = todoid;
+	getData();
 
-		li.append(createEl('span', todotext, []));
-		li.append(createEl('input', '', ['hidden']));
-		li.append(createEl('span', '', ['del']));
-		li.append(createEl('span', '', ['edit']));
 
-		todolist.append(li);
-	}
+	function createShop(data){
+		data.forEach(sushi => {
+			let div = document.createElement('div');
+			div.classList.add('item');
+			div.dataset.name = sushi.name;
 
-	function createEl(tag, text, classlist){
-		let el = document.createElement(tag);
-		el.innerText = text;
-		classlist.forEach((item)=>el.classList.add(item));
-		return el;
-	}
+			let img = new Image();
+			img.src = sushi.img;
 
-	function deleteTask(id){
-		todos.forEach((item, index) => {
-			if(item.id == id){
-				todos.splice(index, 1);
-			}
+			let name = document.createElement('h3');
+			name.innerText = sushi.name;
+
+			let price = document.createElement('h2');
+			price.innerText = `${sushi.price} UAH`;
+
+			let btn = document.createElement('button');
+			btn.classList.add('buy');
+			btn.innerText = 'Add to cart';
+
+			div.append(img);
+			div.append(name);
+			div.append(price);
+			div.append(btn);
+
+			container.append(div);
 		});
-
-		if(todos.length == 0){
-			checkTodos();
-		}
-		saveToLS();
 	}
 
-	function editTask(id){
-		let el = document.getElementById(`${id}`);
-		let span = el.querySelector('span');
-		let inp = el.querySelector('input');
+	const cartCount = document.querySelector('.cart_count');
+	const cartTotal = document.querySelector('.cart_total');
+	let cart = [];
+	let total = 0;
+	let itemsInCart = 0;
 
-		span.classList.add('hidden');
-		inp.classList.remove('hidden');
-
-		inp.value = span.innerText;
-
-		inp.onkeyup = (event) =>{
-			if(event.keyCode == 13){
-				span.innerText = inp.value;
-				inp.classList.add('hidden');
-				span.classList.remove('hidden');
-
-				todos.forEach((item, index) => {
-					if(item.id == id){
-						item.task = inp.value;
-					}
-				});
-
-				saveToLS();
-				inp.onkeyup = null; // отписаться от слушателя
-			}
-		}
-	}
-
-
-	document.addEventListener('click', function(event){
-		if(event.target.parentNode.tagName.toLowerCase() == 'li'){
-			event.target.parentNode.classList.toggle('done');
-		}
-		if(event.target.classList.contains('del')){
-			let id = event.target.parentNode.id;
-			event.target.parentNode.remove();
-			deleteTask(id);
-		}
-		if(event.target.classList.contains('edit')){
-			let id = event.target.parentNode.id;
-			editTask(id);
+	document.addEventListener('click', function(e){
+		if(e.target.classList.contains('buy')){
+			addToCart(e.target.parentNode.dataset.name);
 		}
 	});
 
+	function addToCart(itemname){
+		itemsInCart += 1;
+		let sushi;
+		data.forEach(item => {
+			if(item.name == itemname){
+				sushi = item; 
+			}
+		});
+		total += sushi.price;
 
+
+		cart.forEach(cartItem => {
+			if(cartItem.name == sushi.name){
+				cartItem.count += 1;
+			}
+			else{
+				cart.push({
+					name: sushi.name,
+					price: sushi.price,
+					count: 1 
+				});
+			}
+		});
+
+		cartCount.innerText = `${itemsInCart} товаров`; // Word endings
+		cartTotal.innerText = `${total} uah`;
+	}
 
 </script>
 

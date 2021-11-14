@@ -1,0 +1,23 @@
+[
+	{
+		"img": "https://kryla.com.ua/img/menu/small/354/959012491.jpg",
+		"price": 199,
+		"name": "California"
+	},
+	{
+		"img": "https://sushiya.ua/media/catalog/product/cache/8ead48f4d9dc504f521f617972d27952/c/a/ca9b4024d3802fc1.jpg",
+		"price": 219,
+		"name": "Philadelfia"
+	},
+	{
+		"img": "https://cdn.cnn.com/cnnnext/dam/assets/210916135259-sushi-stock-restricted-super-169.jpg",
+		"price": 149,
+		"name": "Sushi small set"
+	},
+	{
+		"img": "https://fusedbyfionauyema.com/wp-content/uploads/2021/02/Fused-by-Fiona-Uyema-Sushi-Q-A-how-to-make-sushi-at-home.jpg",
+		"price": 349,
+		"name": "Big sushi set"
+	}
+	
+]
