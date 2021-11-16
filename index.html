@@ -6,37 +6,10 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1"> 
 
 	<style>
-
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		.shop{
-			display: flex;
-			justify-content: space-between;
-			align-items: flex-start;
-			flex-flow: row wrap;
-			gap: 30px;
-		}
-
-		.item{
-			width: calc(50% - 30px);
-			text-align: center;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-
-		.item img{
-			width: 100%;
-			height: 200px;
-			object-position: center;
-			object-fit: cover;
-		}
-
-		.item h2{
-			color: purple;
+		canvas{
+			width: 500px;
+			height: 300px;
+			border: 1px solid #e2e2e2;
 		}
 
 	</style>
@@ -44,163 +17,112 @@
 </head>
 <body>
 
-	<header>
-		<div class="cart">
-			<img width="30" src="carts.png">
-			<span class="cart_count">0 товаров,</span>
-			<span class="cart_total">0 uah</span>
-		</div>
 
-		<select>
-			<option selected disabled>by default</option>
-			<option value="name">by name</option>
-			<option value="price">by price</option>
-		</select>
-	</header>
-
-	<div class="shop"></div>
+	<canvas width="500" height="300"></canvas>
 
 
 <script>
+	const canvas = document.querySelector('canvas');
+	let cWidth = canvas.offsetWidth;
+	let cHeight = canvas.offsetHeight;
+	let ctx = canvas.getContext('2d');
 
-	const URL = 'data.json';
-	let container = document.querySelector('.shop');
-	let data;
+	let balls = [];
+	let maxRad = 15;
+	let maxCount = 10;
+	let d_y = 3;
+	let d_x = 3;
+	let interval;
 
-	function getData(){
-		let xhr = new XMLHttpRequest();
-		xhr.open('GET', URL);
-		xhr.send();
 
-		xhr.onload = () => {
-			if(xhr.status == 200){
-				data = JSON.parse(xhr.response);
-				createShop(data);
-			}
-			else{
-				console.error(xhr.statusText);
-			}
+	function update(){
+		clear();
+		///
+		balls.forEach(item =>drawBall(item));
+	}
+
+	function createColor(){
+		let r = Math.floor(Math.random()*255);
+		let g = Math.floor(Math.random()*255);
+		let b = Math.floor(Math.random()*255);
+		let color = `rgb(${r},${g},${b})`;
+		return color
+	}
+
+	function createBall(){
+		if(balls.length < maxCount){
+			let rad = Math.random()*maxRad + 5;
+			let ball = {
+				r: rad,
+				col: createColor(),
+				pos_x: 0,
+				pos_y: 0,
+				d_y: 3,
+				d_x: 3,
+				balldir: true //'right'
+			};
+
+			balls.push(ball);
+		}
+		else{
+			clearInterval(interval);
 		}
 	}
 
-	getData();
+	function drawBall(ball){
+		ctx.beginPath();
+	    ctx.arc(ball.pos_x, ball.pos_y, ball.r, 0, Math.PI * 2, true);
+	    ctx.closePath();
+	    ctx.fillStyle = ball.col;
+	    ctx.fill();
 
-
-	function createShop(data){
-		data.forEach(sushi => {
-			let div = document.createElement('div');
-			div.classList.add('item');
-			div.dataset.name = sushi.name;
-
-			let img = new Image();
-			img.src = sushi.img;
-
-			let name = document.createElement('h3');
-			name.innerText = sushi.name;
-
-			let price = document.createElement('h2');
-			price.innerText = `${sushi.price} UAH`;
-
-			let btn = document.createElement('button');
-			btn.classList.add('buy');
-			btn.innerText = 'Add to cart';
-
-			div.append(img);
-			div.append(name);
-			div.append(price);
-			div.append(btn);
-
-			container.append(div);
-		});
+	    moveBall(ball);
 	}
 
-	const cartCount = document.querySelector('.cart_count');
-	const cartTotal = document.querySelector('.cart_total');
-	let cart = [];
-	let total = 0;
-	let itemsInCart = 0;
 
-	document.addEventListener('click', function(e){
-		if(e.target.classList.contains('buy')){
-			addToCart(e.target.parentNode.dataset.name);
+	function moveBall(ball){
+
+		ball.pos_x += ball.d_x;
+		ball.pos_y += ball.d_y;
+
+		if(ball.pos_x + ball.r > cWidth || ball.pos_x + ball.r < ball.r){
+			ball.d_x = -ball.d_x;
+			ball.balldir = ball.d_x > 0;
+			ball.col = createColor();
 		}
-	});
+		if(ball.pos_y + ball.r > cHeight || ball.pos_y + ball.r < ball.r){
+			ball.d_y = -ball.d_y;
+			ball.col = createColor();
+		}
 
-	function addToCart(itemname){
-		itemsInCart += 1;
-		let sushi;
-		data.forEach(item => {
-			if(item.name == itemname){
-				sushi = item; 
-			}
-		});
-		total += sushi.price;
 
-		let itemWasInCart = false;
-		cart.forEach( item => {
-			if(item.name == itemname){
-				itemWasInCart = true;
-				item.summary += sushi.price;
-				item.count += 1;
-			}
-		});	
+		let ball_x = ball.pos_x + ball.r;
+		let ball_y = ball.pos_y + ball.r;
 
-		if(!itemWasInCart){
-			cart.push({
-				name: itemname,
-				summary: sushi.price,
-				count: 1
-			});
-		}	
-
-		cartCount.innerText = `${itemsInCart} товаров`; // Word endings
-		cartTotal.innerText = `${total} uah`;
-	}
-
-	let select = document.querySelector('select');
-
-	select.onchange = function(event){
-		let type = this.value;
-		sort(type);
-	}
-
-	function sort(type){
-		// 1st var
-		// let d = data.slice();
-		// d.sort(function(a,b){
-		// 	if(a[type] > b[type]){
-		// 		return 1;
-		// 	}
-		// 	else if(a[type] < b[type]){
-		// 		return -1;
-		// 	}
-		// 	else{
-		// 		return 0;
-		// 	}
-		// });
-		// container.innerText = '';
-		// createShop(d);
-
-		// 2nd var
-		let target = type == 'name' ?  'h3' : 'h2';
-		let goods = document.querySelectorAll(`.item ${target}`); // .item h2 || .item h3
-		goods = Array.prototype.slice.call(goods); 
-
-		goods.sort(function(a,b){
-			if(a.innerText > b.innerText){
-				return 1;
-			}
-			else if(a.innerText < b.innerText){
-				return -1;
-			}
-			else{
-				return 0;
+		balls.forEach(item => {
+			if(item != ball && item.balldir != ball.balldir){
+				if( item.pos_x + item.r <= ball_x && item.pos_y + item.r <= ball_y ){
+					ball.d_y = -ball.d_y;
+					ball.d_x = -ball.d_x;
+					item.d_y = -item.d_y;
+					item.d_x = -item.d_x;
+					ball.balldir = !ball.balldir;
+					item.balldir = !item.balldir;
+				}
 			}
 		});
 
-		goods.forEach((item, index) => item.parentNode.style.order = index);
-
 	}
+
+	function clear(){
+		ctx.clearRect(0,0, cWidth, cHeight);
+	}
+
+	interval = setInterval(createBall, 1000);
+
+	setInterval(update, 20);
+
+
 
 </script>
 
