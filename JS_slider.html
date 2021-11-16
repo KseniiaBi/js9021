@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://127.0.0.1:8080/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>JS FE</title> 
+	
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+
+	<style>
+
+		.slider{
+			height: 300px;
+			position: relative;
+		}
+
+		.slide{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			text-align: center;
+			font-size: 100px;
+			color: #fff;
+			background: lightgray;
+			opacity: 0;
+			transition: opacity 0.5s linear;
+		}
+
+		.slide:nth-of-type(2){
+			background: lightgreen;
+		}
+		.slide:nth-of-type(3){
+			background: hotpink;
+		}
+		.slide:nth-of-type(4){
+			background: lightblue;
+		}
+		.slide:nth-of-type(5){
+			background: limegreen;
+		}
+
+		.slide.active{
+			opacity: 1;
+		}
+
+		.navs{
+			position: absolute;
+			bottom: 20px;
+			display: flex;
+			justify-content: center;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			cursor: pointer;
+		}
+
+		.nav{
+			list-style: none;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			border: 2px solid #fff;
+			margin-right: 15px;
+		}
+
+		.nav.active{
+			background: #fff;
+		}
+
+		#arr_prev, #arr_next{
+			position: absolute;
+			top: 100px;
+			font-size: 100px;
+			transform: scaleX(0.5);
+			left: 0;
+			z-index: 10;
+			color: #fff;
+			cursor: pointer;
+		}
+
+		#arr_next{
+			left: auto;
+			right: 0;
+		}
+		
+
+	</style>
+	
+</head>
+<body>
+
+	<div class="slider">
+		<div class="slide">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide active">Slide 5</div>
+
+		<ul class="navs">
+			<li data-slide="0" class="nav"></li>
+			<li data-slide="1" class="nav"></li>
+			<li data-slide="2" class="nav"></li>
+			<li data-slide="3" class="nav"></li>
+			<li data-slide="4" class="nav active"></li>
+		</ul>
+
+		<div id="arr_prev">&lt;</div>
+		<div id="arr_next">&gt;</div>
+	</div>
+
+
+<script>
+
+	let slider = document.querySelector('.slider');
+	let slides = document.querySelectorAll('.slide');
+	let navs = document.querySelectorAll('.nav');
+	navs = [].slice.call(navs);
+	let prev = document.getElementById('arr_prev');
+	let next = document.getElementById('arr_next');
+	let currentSlide = 0;
+
+	navs.forEach(item => {
+		let itemNum = +item.dataset.slide;
+		item.onclick = () => {
+			currentSlide = itemNum;
+			changeSlide(itemNum);
+		}
+	});
+
+	let interval;
+// autoplay
+	function init(){
+		interval = setInterval(function(){
+			currentSlide = currentSlide<slides.length-1 ? ++currentSlide : 0;
+			changeSlide(currentSlide);
+		},3000);
+	}
+	// initialize autoplay once
+	init();
+
+// change slide from everywhere
+	function changeSlide(num){
+		for(let i = 0; i < slides.length; i++){
+			slides[i].classList.remove('active');
+			navs[i].classList.remove('active');
+		}
+		slides[num].classList.add('active');
+		navs[num].classList.add('active');
+
+		// re-initialize autoplay 
+		clearInterval(interval);
+		init();
+	}
+// arrows
+	prev.onclick = ()=>{
+		currentSlide = currentSlide> 0 ? --currentSlide : slides.length-1;
+		changeSlide(currentSlide);
+	}
+
+	next.onclick = ()=>{
+		currentSlide = currentSlide<slides.length-1 ? ++currentSlide : 0;
+		changeSlide(currentSlide);
+	}
+
+
+	// swipe
+
+
+	slider.addEventListener('touchstart', handleTouchStart, {passive: true});        
+	slider.addEventListener('touchmove', handleTouchMove, {passive: true});
+
+	let xDown = null; 
+
+	function getTouches(evt) {
+	  return evt.touches ||             
+	         evt.originalEvent.touches;
+	}                                                     
+
+	function handleTouchStart(evt) {
+	    const firstTouch = getTouches(evt)[0];                                      
+	    xDown = firstTouch.clientX;                                     
+	};                                                
+
+	function handleTouchMove(evt) {
+	    if ( ! xDown  ) {
+	        return;
+	    }
+
+	    let xUp = evt.touches[0].clientX;  
+	    let xDiff = xDown - xUp;
+
+        if ( xDiff > 0 ) {
+            /* left swipe */
+			currentSlide = currentSlide<slides.length-1 ? ++currentSlide : 0;
+			changeSlide(currentSlide);
+        } else {
+            /* right swipe */
+			currentSlide = currentSlide> 0 ? --currentSlide : slides.length-1;
+			changeSlide(currentSlide);
+        }
+
+	    /* reset values */
+	    xDown = null;                                        
+	};
+
+
+
+</script>
+
+
+</body></html>
