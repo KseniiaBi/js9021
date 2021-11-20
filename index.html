@@ -18,106 +18,39 @@
 <body>
 
 
-	<canvas width="500" height="300"></canvas>
 
 
 <script>
-	const canvas = document.querySelector('canvas');
-	let cWidth = canvas.offsetWidth;
-	let cHeight = canvas.offsetHeight;
-	let ctx = canvas.getContext('2d');
-
-	let balls = [];
-	let maxRad = 15;
-	let maxCount = 10;
-	let d_y = 3;
-	let d_x = 3;
-	let interval;
 
 
-	function update(){
-		clear();
-		///
-		balls.forEach(item =>drawBall(item));
-	}
+	const URL = 'data.json';
 
-	function createColor(){
-		let r = Math.floor(Math.random()*255);
-		let g = Math.floor(Math.random()*255);
-		let b = Math.floor(Math.random()*255);
-		let color = `rgb(${r},${g},${b})`;
-		return color
-	}
-
-	function createBall(){
-		if(balls.length < maxCount){
-			let rad = Math.random()*maxRad + 5;
-			let ball = {
-				r: rad,
-				col: createColor(),
-				pos_x: 0,
-				pos_y: 0,
-				d_y: 3,
-				d_x: 3
-			};
-
-			balls.push(ball);
-		}
-		else{
-			clearInterval(interval);
-		}
-	}
-
-	function drawBall(ball){
-		ctx.beginPath();
-	    ctx.arc(ball.pos_x, ball.pos_y, ball.r, 0, Math.PI * 2, true);
-	    ctx.closePath();
-	    ctx.fillStyle = ball.col;
-	    ctx.fill();
-
-	    moveBall(ball);
-	}
+	// let promise = new Promise(function(resolve, reject){
+	// 	let xhr = new XMLHttpRequest();
+	// 	xhr.open('GET', URL);
+	// 	xhr.send();
+	// 	xhr.onload = function(){
+	// 		if(xhr.status == 200){
+	// 			resolve(xhr.response);
+	// 		}
+	// 		else{
+	// 			reject(xhr.status);
+	// 		}
+	// 	};
+	// });
 
 
-	function moveBall(ball){
-
-		ball.pos_x += ball.d_x;
-		ball.pos_y += ball.d_y;
-
-		if(ball.pos_x + ball.r > cWidth || ball.pos_x + ball.r < ball.r){
-			ball.d_x = -ball.d_x;
-			ball.col = createColor();
-		}
-		if(ball.pos_y + ball.r > cHeight || ball.pos_y + ball.r < ball.r){
-			ball.d_y = -ball.d_y;
-			ball.col = createColor();
-		}
+	// promise.then(function(result){
+	// 			document.body.innerText = result;
+	// 		})
+	// 		.catch(error => console.error(error));
 
 
-		let ball_x = ball.pos_x + ball.r;
-		let ball_y = ball.pos_y + ball.r;
+	let promise = fetch(URL);
 
-		balls.forEach(item => {
-			if(item != ball && item.d_x != ball.d_x || item.d_y != ball.d_y){
-				if( Math.abs(item.pos_x - ball_x) < 2 && Math.abs(item.pos_y - ball_y) <2 ){
-					ball.d_y = -ball.d_y;
-					ball.d_x = -ball.d_x;
-					item.d_y = -item.d_y;
-					item.d_x = -item.d_x;
-				}
-			}
-		});
-
-	}
-
-	function clear(){
-		ctx.clearRect(0,0, cWidth, cHeight);
-	}
-
-	interval = setInterval(createBall, 1000);
-
-	setInterval(update, 20);
-
+	promise.then(result => result.json())
+			.then(response => console.log(response))
+			.catch(error => console.error(error));
 
 
 </script>
