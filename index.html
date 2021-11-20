@@ -58,8 +58,7 @@
 				pos_x: 0,
 				pos_y: 0,
 				d_y: 3,
-				d_x: 3,
-				balldir: true //'right'
+				d_x: 3
 			};
 
 			balls.push(ball);
@@ -87,7 +86,6 @@
 
 		if(ball.pos_x + ball.r > cWidth || ball.pos_x + ball.r < ball.r){
 			ball.d_x = -ball.d_x;
-			ball.balldir = ball.d_x > 0;
 			ball.col = createColor();
 		}
 		if(ball.pos_y + ball.r > cHeight || ball.pos_y + ball.r < ball.r){
@@ -100,14 +98,12 @@
 		let ball_y = ball.pos_y + ball.r;
 
 		balls.forEach(item => {
-			if(item != ball && item.balldir != ball.balldir){
-				if( item.pos_x + item.r <= ball_x && item.pos_y + item.r <= ball_y ){
+			if(item != ball && item.d_x != ball.d_x || item.d_y != ball.d_y){
+				if( Math.abs(item.pos_x - ball_x) < 2 && Math.abs(item.pos_y - ball_y) <2 ){
 					ball.d_y = -ball.d_y;
 					ball.d_x = -ball.d_x;
 					item.d_y = -item.d_y;
 					item.d_x = -item.d_x;
-					ball.balldir = !ball.balldir;
-					item.balldir = !item.balldir;
 				}
 			}
 		});
