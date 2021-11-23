@@ -1,0 +1,25 @@
+//HW array method
+
+//1
+let arr = [1, 2, 3];
+arr.push(4);
+arr.push(5);
+arr.push(6);
+console.log(arr);
+
+//2
+let arr2 = [1, 2, 3];
+arr2.unshift(4);
+arr2.unshift(5);
+arr2.unshift(6);
+console.log(arr2);
+
+//3
+let arr3 = [1, 2, 3, 4, 5];
+arr3.splice(3, 0, 'a', 'b', 'c');
+console.log(arr3);
+
+//4
+let gh = 3751;
+let arr4 = (gh + '').split('').sort().join('');
+console.log(+arr4);
