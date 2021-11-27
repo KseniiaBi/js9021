@@ -1,0 +1,29 @@
+{
+  "name": "none",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "coffee.js",
+  "scripts": {
+    "test": "eee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KseniiaBi/js9021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KseniiaBi/js9021/issues"
+  },
+  "homepage": "https://github.com/KseniiaBi/js9021#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-imagemin": "^8.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-uglify-es": "^3.0.0",
+    "sass": "^1.43.5"
+  },
+  "dependencies": {
+    "gulp-rename": "^2.0.0"
+  }
+}

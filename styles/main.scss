@@ -1,0 +1,10 @@
+@use 'vars';
+
+body{
+	background: vars.$black	;
+}
+
+h1{
+	font: 48px/1.2 'Helvetica' sans-serif;
+	color: vars.$white;
+}
