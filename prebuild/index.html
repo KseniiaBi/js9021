@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><title>JS FE</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{margin:0;padding:0}body{background:#000}h1{font:48px/1.2 Helvetica sans-serif;color:#fff}</style><link rel="stylesheet" type="text/css" href="styles/main.css" media="print" onload="this.media='all'"></head><body><h1>Heading text</h1><picture><source srcset="img/andy-holmes-LUpDjlJv4_c-unsplash.webp" type="image/webp"><source srcset="img/andy-holmes-LUpDjlJv4_c-unsplash.jpg" type="image/jpeg"><img src="img/andy-holmes-LUpDjlJv4_c-unsplash.jpg" alt="space"></picture><div class="video"><video muted=""><source src="video_preview_h264.mp4" type="video/MP4"></video><div id="play_btn"></div><div id="mute_btn"></div></div><script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script><script>let playbtn = $('#play_btn');
+	let mutebtn = $('#mute_btn');
+	let video = document.querySelector('video');
+	let video_container = document.querySelector('.video');
+	let isPlaying = false;
+
+	playbtn.click(() => {
+		video.play(); // plain js
+		isPlaying = true;
+		playbtn.css({
+			'background-image': "url('pause.png')"
+		});
+		playbtn.hide();
+	});
+
+	$(video_container).on('mouseover', ()=> {
+		if(isPlaying){
+			playbtn.show()
+		}
+		
+	});
+	$(video_container).on('mouseleave', ()=> {
+		if(isPlaying){
+			playbtn.hide()
+		}
+		
+	});
+
+	$(video).on('ended', () => {
+		isPlaying = false;
+		playbtn.css({
+			'background-image': "url('play-button.png')"
+		});
+		playbtn.show();
+	});</script></body></html>

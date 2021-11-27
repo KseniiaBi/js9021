@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><title>JS FE</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{
+			width: 100%;
+			overflow-x: hidden;
+		}
+
+		.menu{
+			display: flex;
+			width: auto;
+			/*overflow-x: scroll;*/
+			overflow-y: visible;
+			font-size: 20px;
+			padding-bottom: 30px;
+			
+		}
+		nav{
+			position: relative;
+		}
+
+		nav a{
+			flex: 0 0 auto;
+			margin-right: 20px;
+		}
+
+		.submenu{
+			position: absolute;
+			top: 40px;
+			left: 0;
+			width: 200px;
+			background: gold;
+			height: 300px;
+		}</style></head><body><header><nav><div class="menu"><a href="#">Link 1</a><div class="submenu"></div><a href="#">Link 2</a> <a href="#">Link 3</a> <a href="#">Link 4</a> <a href="#">Link 5</a> <a href="#">Link 6</a> <a href="#">Link 7</a></div></nav></header><script>let nav = document.querySelector('nav');
+	let scrollnav =  document.querySelector('.menu');
+
+	nav.onmousedown = function (event){
+		move(event.offsetX);
+	}
+
+	function move(start){
+		let start_x = start;
+
+		nav.onmouseup = function(event){
+			let end_x = event.offsetX;
+			let currentTransform = window.getComputedStyle(scrollnav).marginLeft;
+			currentTransform = +currentTransform.substr(0, currentTransform.length - 2);
+		
+			let delta_x = end_x - start_x;
+			let endTransform = currentTransform + delta_x;
+
+			scrollnav.style.marginLeft = `${endTransform}px`;
+		}
+	}</script></body></html>
