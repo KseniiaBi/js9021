@@ -18,7 +18,7 @@
   "homepage": "https://github.com/KseniiaBi/js9021#readme",
   "devDependencies": {
     "critical": "^4.0.1",
-    "gulp-clean": "^0.4.0",
+    "gulp": "^3.9.1",
     "gulp-cwebp": "^4.0.2",
     "gulp-image": "^6.2.1",
     "gulp-sass": "^5.0.0",

@@ -7,7 +7,7 @@ const cwebp = require('gulp-cwebp');
 const webphtml = require('gulp-webp-for-html');
 const htmlmin = require('gulp-htmlmin');
 const critical = require('critical');
-const clean = require('gulp-clean');
+const browserSync = require('browser-sync').create();
 
 
 
@@ -107,15 +107,7 @@ gulp.task('copy-files', function() {
     done();
 });
 
-/* https://github.com/gulpjs/gulp/blob/master/docs/recipes/delete-files-folder.md */
-// npm install --save-dev gulp del
 
-// dist clean up every time
- 
-gulp.task('default', function () {
-    return gulp.src('app/tmp', {read: false})
-        .pipe(clean());
-});
 
 
 gulp.task('moveto-dist', function() {
@@ -127,10 +119,32 @@ gulp.task('moveto-dist', function() {
 // total build task
 
 exports.prebuild = gulp.series('buildStyles', 'uglify', 'images', 'html', 'critical', 'copy-files');
-exports.build = gulp.series('clean-dist', prebuild, 'moveto-dist');
+exports.build = gulp.series('clean', prebuild, 'moveto-dist');
 
 
 
 // watch + browsersync
+
+
+// Static Server + watching scss/html files
+gulp.task('serve', ['sass'], function() {
+
+    browserSync.init({
+        server: "./app"
+    });
+
+    gulp.watch("app/scss/*.scss", ['sass']);
+    gulp.watch("app/*.html").on('change', browserSync.reload);
+});
+
+// Compile sass into CSS & auto-inject into browsers
+gulp.task('sass', function() {
+    return gulp.src("./styles/*.scss")
+        .pipe(sass())
+        .pipe(gulp.dest("./styles/"))
+        .pipe(browserSync.stream());
+});
+
+gulp.task('default', ['serve']);
 
 // webp
