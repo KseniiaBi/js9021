@@ -8,93 +8,78 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      todos: []
+      squares: ['', '', '', '', '', '', '', '', ''],
+      isActiveX: true 
     }
-    this.saveTask = this.saveTask.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
-    this.editTask = this.editTask.bind(this);
+
+    this.setValue = this.setValue.bind(this);
+    this.checkWin = this.checkWin.bind(this);
+    this.finishGame = this.finishGame.bind(this);
   }
 
-  saveTask(event){
-    event.preventDefault();
-    const inp = document.getElementById('todoinput');
-    let task = inp.value;
-    if(task.length > 0){
+  checkWin(){
+    const sq = this.state.squares.slice();
 
-      let todosCopy = this.state.todos.slice();
+    if(sq[0] == sq[1] &&  sq[1] == sq[2] && sq[0] != ''){
+      //  ||
+      // sq[6] == sq[7] && sq[7] == sq[8] && (sq[6] == 'X' ||sq[6] == '0' ) ||
+      // sq[0] == sq[3] && sq[3] == sq[6] && (sq[0] == 'X' ||sq[0] == '0' ) ||
+      // sq[1] == sq[4] && sq[4] == sq[7] && (sq[1] == 'X' ||sq[1] == '0' ) ||
+      // sq[2] == sq[5] && sq[5] == sq[8] && (sq[2] == 'X' ||sq[2] == '0' ) ||
+      // sq[0] == sq[4] && sq[4] == sq[8] && (sq[0] == 'X' ||sq[0] == '0' ) ||
+      // sq[2] == sq[4] && sq[4] == sq[6] && (sq[2] == 'X' ||sq[2] == '0' )) {
+        this.finishGame();
+    }
+    else if(sq[3] == sq[4] && sq[4]  == sq[5] && (sq[3] == 'X' ||sq[3] == '0' )){
+      this.finishGame();
+    }
 
-      let todo = {
-        task: task,
-        id: Date.now()
-      }
+  }
 
-      todosCopy.push(todo);
+  finishGame(){
+    let stats = document.querySelector('.stats');
+    stats.innerText = `${this.state.isActiveX ? "0" : "X"} won!`;
 
-      this.setState({
-        todos: todosCopy
-      });
+    alert(`${this.state.isActiveX ? "0" : "X"} won!`);
 
-      inp.value = '';
+  }
+
+  setValue(id){
+    if(this.state.squares[id].length == 0){
+
+        let value = this.state.isActiveX ? "X" : "0";
+        let squaresCopy = this.state.squares.slice();
+        squaresCopy[id] = value;
+
+        let newisActiveX = !this.state.isActiveX;
+        this.setState({
+          squares: squaresCopy,
+          isActiveX: newisActiveX
+        });
+
+        this.checkWin();
     }
   }
 
-  editTask(id){
-
-  }
-
-  deleteTask(id){
-    let todosCopy = this.state.todos.slice();
-    todosCopy.forEach((item,index) => {
-      if(item.id === id){
-        todosCopy.splice(index,1);
-      }
-    });
-    this.setState({
-      todos: todosCopy
-    });
-  }
 
   render(){
     return (
-      <div className="todoapp">
-        <form onSubmit={this.saveTask} className="todoform">
-          <input id="todoinput" type="text" placeholder="type your task here" />
-          <input type="submit" value="Save" />
-        </form>
-
-        <div className="todocontent">
-            {     this.state.todos.length > 0 ?
-                                      <List todos={this.state.todos} del={this.deleteTask} />
-                                      :<h2>Any tasks yet, type your first at form below</h2>
-            }
-
+      <div className="tictacapp">
+        <div className="stats"> Current player is {this.state.isActiveX ? "X" : "0"} </div>
+        <div className="game">
+          {
+            this.state.squares.map((square, index) => <Square key={index} id={index} setVal={this.setValue} text={square} />)
+          }
         </div>
-
       </div>
     );
   }
 }
 
 
-function List(props){
+function Square(props){
   return(
-    <ol className="todolist">
-       {
-          props.todos.length > 0 ?
-            props.todos.map(item => <Todo key={item.id} id={item.id} text={item.task} del={props.del} /> )
-            : null
-        }
-    </ol>
-  );
-}
-
-
-function Todo(props){
-  return(
-    <li id={props.id}>
-       {props.text}
-       <img width="30" src={delIcon} alt="delete" onClick={() => props.del(props.id)} />
-    </li>
+    <div onClick={() => props.setVal(props.id)} className="square">{props.text}</div>
   );
 }
 
