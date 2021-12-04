@@ -9,7 +9,8 @@ class App extends React.Component{
     super(props);
     this.state = {
       squares: ['', '', '', '', '', '', '', '', ''],
-      isActiveX: true 
+      isActiveX: true,
+      gameIsOver: false 
     }
 
     this.setValue = this.setValue.bind(this);
@@ -20,20 +21,36 @@ class App extends React.Component{
   checkWin(){
     const sq = this.state.squares.slice();
 
-    if(sq[0] == sq[1] &&  sq[1] == sq[2] && sq[0] != ''){
-      //  ||
-      // sq[6] == sq[7] && sq[7] == sq[8] && (sq[6] == 'X' ||sq[6] == '0' ) ||
-      // sq[0] == sq[3] && sq[3] == sq[6] && (sq[0] == 'X' ||sq[0] == '0' ) ||
-      // sq[1] == sq[4] && sq[4] == sq[7] && (sq[1] == 'X' ||sq[1] == '0' ) ||
-      // sq[2] == sq[5] && sq[5] == sq[8] && (sq[2] == 'X' ||sq[2] == '0' ) ||
-      // sq[0] == sq[4] && sq[4] == sq[8] && (sq[0] == 'X' ||sq[0] == '0' ) ||
-      // sq[2] == sq[4] && sq[4] == sq[6] && (sq[2] == 'X' ||sq[2] == '0' )) {
-        this.finishGame();
-    }
-    else if(sq[3] == sq[4] && sq[4]  == sq[5] && (sq[3] == 'X' ||sq[3] == '0' )){
-      this.finishGame();
-    }
+    if(!this.state.gameIsOver ){
 
+      if(sq[0] === sq[1] &&  sq[1] === sq[2] && sq[0] !== '' ||
+        sq[3] === sq[4] && sq[4]  === sq[5] && sq[3] !== '' ||
+        sq[0] === sq[3] && sq[3] === sq[6] && sq[0] !== '' ||
+        sq[6] === sq[7] && sq[7] === sq[8] && sq[6] !== '' ||
+        sq[1] === sq[4] && sq[4] === sq[7] && sq[1] !== '' ||
+        sq[2] === sq[5] && sq[5] === sq[8] && sq[2] !== ''||
+        sq[0] === sq[4] && sq[4] === sq[8] && sq[0] !== '' ||
+        sq[2] === sq[4] && sq[4] === sq[6] && sq[2] !== '' ) {
+          
+          this.finishGame();
+      }
+      else{
+        let allFilled = sq.every((item) => item !== '');
+        if(allFilled){
+          alert('No winner, game is over');
+          this.restartGame();
+        }  
+      }
+    }
+  }
+
+  restartGame(){
+    let stats = document.querySelector('.stats');
+    this.setState({
+          squares: ['', '', '', '', '', '', '', '', ''],
+          isActiveX: true
+        });
+    stats.innerText = `Current player is ${this.state.isActiveX ? "X" : "0"}`;
   }
 
   finishGame(){
@@ -41,7 +58,7 @@ class App extends React.Component{
     stats.innerText = `${this.state.isActiveX ? "0" : "X"} won!`;
 
     alert(`${this.state.isActiveX ? "0" : "X"} won!`);
-
+    this.restartGame();
   }
 
   setValue(id){
@@ -57,7 +74,7 @@ class App extends React.Component{
           isActiveX: newisActiveX
         });
 
-        this.checkWin();
+      setTimeout(this.checkWin, 10)  
     }
   }
 
